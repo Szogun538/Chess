@@ -13,7 +13,6 @@ func _ready() -> void:
 func _on_b_dragged():
 	get_parent().move_child(self, get_parent().get_child_count() - 1)
 	var start_tile_position = $Piece.start_tile.chess_position
-	# if table.tile_base_on_position(start_tile_position).protecting_from.size() == 0:
 	moves(start_tile_position, 0)
 
 func _on_b_dropped():
@@ -54,6 +53,7 @@ func reset_attacking():
 #		4 - Adds sekf to path to king
 #		5 - Remove it self from path
 
+
 func moves(posi: Vector2, mode: int):
 	var scan_tiles: Array[Node2D] = []
 	var occupied_scan_tiles: Array[Node2D] = []
@@ -67,6 +67,8 @@ func moves(posi: Vector2, mode: int):
 					if table.tile_base_on_position(posi).protecting_from.size() == 0:
 						if table.piece_checking != null:
 							if table.tile_base_on_position(loop_tile).path_when_pro(table.piece_checking):
+								table.change_position_state(loop_tile, table.available(loop_tile, is_white))
+							if table.tile_base_on_position(loop_tile).piece_standing == table.piece_checking:
 								table.change_position_state(loop_tile, table.available(loop_tile, is_white))
 						else:
 							table.change_position_state(loop_tile, table.available(loop_tile, is_white))

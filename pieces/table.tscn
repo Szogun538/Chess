@@ -365,22 +365,22 @@ position = Vector2(375, 27)
 [node name="rook_b0" parent="." unique_id=1799495701 groups=["pieces_b"] instance=ExtResource("6_se32x")]
 position = Vector2(25, 27)
 
-[node name="biship_w5" parent="." unique_id=242697627 instance=ExtResource("7_bv3y0")]
+[node name="biship_w5" parent="." unique_id=242697627 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
 position = Vector2(275, 377)
 
-[node name="biship_w2" parent="." unique_id=1661671633 instance=ExtResource("7_bv3y0")]
+[node name="biship_w2" parent="." unique_id=1661671633 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
 position = Vector2(125, 377)
 
-[node name="bishop_b2" parent="." unique_id=1022110179 instance=ExtResource("8_25foh")]
+[node name="bishop_b2" parent="." unique_id=1022110179 groups=["pieces_b"] instance=ExtResource("8_25foh")]
 position = Vector2(125, 27)
 
-[node name="bishop_b5" parent="." unique_id=1336916231 instance=ExtResource("8_25foh")]
+[node name="bishop_b5" parent="." unique_id=1336916231 groups=["pieces_b"] instance=ExtResource("8_25foh")]
 position = Vector2(275, 27)
 
-[node name="queen_w" parent="." unique_id=1478340234 instance=ExtResource("9_x0osx")]
+[node name="queen_w" parent="." unique_id=1478340234 groups=["pieces_w"] instance=ExtResource("9_x0osx")]
 position = Vector2(175, 377)
 
-[node name="queen_b" parent="." unique_id=355965909 instance=ExtResource("10_nlwut")]
+[node name="queen_b" parent="." unique_id=355965909 groups=["pieces_b"] instance=ExtResource("10_nlwut")]
 position = Vector2(175, 27)
 
 [node name="knight_w1" parent="." unique_id=790390811 instance=ExtResource("11_bpfmt")]

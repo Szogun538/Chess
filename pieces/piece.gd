@@ -43,6 +43,7 @@ func _input(event):
 						current_tile.is_occupied = true
 						p_parent.global_position = current_tile.position
 						current_tile.piece_standing.moves(current_tile.chess_position, 3)
+						current_tile.piece_standing.moves(current_tile.chess_position, 5)
 						current_tile.piece_standing.queue_free()
 						current_tile.piece_standing = p_parent
 					start_tile.is_occupied = false

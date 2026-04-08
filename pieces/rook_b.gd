@@ -14,8 +14,7 @@ func _ready() -> void:
 func _on_b_dragged():
 	get_parent().move_child(self, get_parent().get_child_count() - 1)
 	var start_tile_position = $Piece.start_tile.chess_position
-	if table.tile_base_on_position(start_tile_position).protecting_from.size() == 0:
-		moves(start_tile_position, 0)
+	moves(start_tile_position, 0)
 
 func _on_b_dropped():
 	var tile_position = $Piece.start_tile.chess_position
@@ -59,151 +58,54 @@ func moves(posi: Vector2, mode: int):
 	var scan_tiles: Array[Node2D] = []
 	var occupied_scan_tiles: Array[Node2D] = []
 	var loop_tile = posi
-	while loop_tile.y < 7:
-		loop_tile.y += 1
-		if mode <= 2:
-			if mode == 0:
-				table.change_position_state(loop_tile, table.available(loop_tile, is_white))
-			if mode == 1:
-				table.tile_base_on_position(loop_tile).check_occ()
-			if mode == 2:
-				table.tile_base_on_position(loop_tile).add_lamp(self, is_white)
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				break
-		if mode == 3:
-			table.tile_base_on_position(loop_tile).remove_lamp(self, is_white)
-		if mode == 4:
-			scan_tiles.append(table.tile_base_on_position(loop_tile))
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
-				if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
-					if occupied_scan_tiles.size() == 1:
-						table.piece_checking = self
-					for i in scan_tiles:
-						if i.piece_standing == null:
-							i.path_to_king_from.append(self) 
-						elif i.piece_standing.name != "king_w" and i.piece_standing.is_white != is_white:
-							if occupied_scan_tiles.size() == 2:
-								i.protecting_from.append(self)
-							if occupied_scan_tiles.size() > 2:
-								i.path_to_king_from.append(self)
+	var direction: Array[Vector2] = [Vector2(0,1), Vector2(0,-1), Vector2(1,0), Vector2(-1,0)]
+	for dir in direction:
+		while loop_tile.x > 0 and dir.x < 0 or loop_tile.x < 7 and dir.x > 0 or loop_tile.y > 0 and dir.y < 0 or loop_tile.y < 7 and dir.y > 0:
+			loop_tile += dir
+			if mode <= 2:
+				if mode == 0:
+					if table.tile_base_on_position(posi).protecting_from.size() == 0:
+						if table.piece_checking != null:
+							if table.tile_base_on_position(loop_tile).path_when_pro(table.piece_checking):
+								table.change_position_state(loop_tile, table.available(loop_tile, is_white))
+							if table.tile_base_on_position(loop_tile).piece_standing == table.piece_checking:
+								table.change_position_state(loop_tile, table.available(loop_tile, is_white))
 						else:
-							i.path_to_king_from.append(self)
+							table.change_position_state(loop_tile, table.available(loop_tile, is_white))
+					else:
+						if table.tile_base_on_position(loop_tile).path_when_pro(table.tile_base_on_position(posi).protecting_from[0]):
+							table.change_position_state(loop_tile, table.available(loop_tile, is_white))
+				if mode == 1:
+					table.tile_base_on_position(loop_tile).check_occ()
+				if mode == 2:
+					table.tile_base_on_position(loop_tile).add_lamp(self, is_white)
+				if table.tile_base_on_position(loop_tile).piece_standing != null:
 					break
-		if mode == 5:
-			table.tile_base_on_position(loop_tile).path_to_king_from.erase(self)
-			table.tile_base_on_position(loop_tile).protecting_from.erase(self)
-	scan_tiles = []
-	occupied_scan_tiles = []
-	loop_tile = posi
-	while loop_tile.y > 0:
-		loop_tile.y -= 1
-		if mode <= 2:
-			if mode == 0:
-				table.change_position_state(loop_tile, table.available(loop_tile, is_white))
-			if mode == 1:
-				table.tile_base_on_position(loop_tile).check_occ()
-			if mode == 2:
-				table.tile_base_on_position(loop_tile).add_lamp(self, is_white)
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				break
-		if mode == 3:
-			table.tile_base_on_position(loop_tile).remove_lamp(self, is_white)
-		if mode == 4:
-			scan_tiles.append(table.tile_base_on_position(loop_tile))
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
-				if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
-					if occupied_scan_tiles.size() == 1:
-						table.piece_checking = self
-					for i in scan_tiles:
-						if i.piece_standing == null:
-							i.path_to_king_from.append(self) 
-						elif i.piece_standing.name != "king_w" and i.piece_standing.is_white != is_white:
-							if occupied_scan_tiles.size() == 2:
-								i.protecting_from.append(self)
-							if occupied_scan_tiles.size() > 2:
+			if mode == 3:
+				table.tile_base_on_position(loop_tile).remove_lamp(self, is_white)
+			if mode == 4:
+				scan_tiles.append(table.tile_base_on_position(loop_tile))
+				if table.tile_base_on_position(loop_tile).piece_standing != null:
+					occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
+					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
+						if occupied_scan_tiles.size() == 1:
+							table.piece_checking = self
+						for i in scan_tiles:
+							if i.piece_standing == null:
+								i.path_to_king_from.append(self) 
+							elif i.piece_standing.name != "king_w" and i.piece_standing.is_white != is_white:
+								if occupied_scan_tiles.size() == 2:
+									i.protecting_from.append(self)
+								if occupied_scan_tiles.size() > 2:
+									i.path_to_king_from.append(self)
+							else:
 								i.path_to_king_from.append(self)
-						else:
-							i.path_to_king_from.append(self)
-					break
-		if mode == 5:
-			table.tile_base_on_position(loop_tile).path_to_king_from.erase(self)
-			table.tile_base_on_position(loop_tile).protecting_from.erase(self)
-	scan_tiles = []
-	occupied_scan_tiles = []
-	loop_tile = posi
-	while loop_tile.x > 0:
-		loop_tile.x -= 1
-		if mode <= 2:
-			if mode == 0:
-				table.change_position_state(loop_tile, table.available(loop_tile, is_white))
-			if mode == 1:
-				table.tile_base_on_position(loop_tile).check_occ()
-			if mode == 2:
-				table.tile_base_on_position(loop_tile).add_lamp(self, is_white)
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				break
-		if mode == 3:
-			table.tile_base_on_position(loop_tile).remove_lamp(self, is_white)
-		if mode == 4:
-			scan_tiles.append(table.tile_base_on_position(loop_tile))
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
-				if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
-					if occupied_scan_tiles.size() == 1:
-						table.piece_checking = self
-					for i in scan_tiles:
-						if i.piece_standing == null:
-							i.path_to_king_from.append(self) 
-						elif i.piece_standing.name != "king_w" and i.piece_standing.is_white != is_white:
-							if occupied_scan_tiles.size() == 2:
-								i.protecting_from.append(self)
-							if occupied_scan_tiles.size() > 2:
-								i.path_to_king_from.append(self)
-						else:
-							i.path_to_king_from.append(self)
-					break
-		if mode == 5:
-			table.tile_base_on_position(loop_tile).path_to_king_from.erase(self)
-			table.tile_base_on_position(loop_tile).protecting_from.erase(self)
-	scan_tiles = []
-	occupied_scan_tiles = []
-	loop_tile = posi
-	while loop_tile.x < 7:
-		loop_tile.x += 1
-		if mode <= 2:
-			if mode == 0:
-				table.change_position_state(loop_tile, table.available(loop_tile, is_white))
-			if mode == 1:
-				table.tile_base_on_position(loop_tile).check_occ()
-			if mode == 2:
-				table.tile_base_on_position(loop_tile).add_lamp(self, is_white)
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				break
-		if mode == 3:
-			table.tile_base_on_position(loop_tile).remove_lamp(self, is_white)
-		if mode == 4:
-			scan_tiles.append(table.tile_base_on_position(loop_tile))
-			if table.tile_base_on_position(loop_tile).piece_standing != null:
-				occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
-				if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
-					if occupied_scan_tiles.size() == 1:
-						table.piece_checking = self
-					for i in scan_tiles:
-						if i.piece_standing == null:
-							i.path_to_king_from.append(self) 
-						elif i.piece_standing.name != "king_w" and i.piece_standing.is_white != is_white:
-							if occupied_scan_tiles.size() == 2:
-								i.protecting_from.append(self)
-							if occupied_scan_tiles.size() > 2:
-								i.path_to_king_from.append(self)
-						else:
-							i.path_to_king_from.append(self)
-					break
-		if mode == 5:
-			table.tile_base_on_position(loop_tile).path_to_king_from.erase(self)
-			table.tile_base_on_position(loop_tile).protecting_from.erase(self)
-	scan_tiles = []
-	occupied_scan_tiles = []
-	loop_tile = posi
+						break
+			if mode == 5:
+				if table.piece_checking == self:
+					table.piece_checking = null
+				table.tile_base_on_position(loop_tile).path_to_king_from.erase(self)
+				table.tile_base_on_position(loop_tile).protecting_from.erase(self)
+		scan_tiles = []
+		occupied_scan_tiles = []
+		loop_tile = posi
