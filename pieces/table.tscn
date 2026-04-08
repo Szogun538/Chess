@@ -1,0 +1,402 @@
+[gd_scene format=3 uid="uid://88t1rihm5yun"]
+
+[ext_resource type="Script" uid="uid://brqespq1xkgtv" path="res://pieces/table.gd" id="1_2jgy3"]
+[ext_resource type="PackedScene" uid="uid://cqf2s5lcl5moj" path="res://tile.tscn" id="2_2lsw2"]
+[ext_resource type="PackedScene" uid="uid://jfq7exbqu5me" path="res://pieces/pawn_w.tscn" id="3_se32x"]
+[ext_resource type="PackedScene" uid="uid://cwpjun8rb0rbu" path="res://pieces/pawn_b.tscn" id="4_bv3y0"]
+[ext_resource type="PackedScene" uid="uid://cv43d8yiphqby" path="res://pieces/rook_w.tscn" id="5_2lsw2"]
+[ext_resource type="PackedScene" uid="uid://yj3s6q3yal2u" path="res://pieces/rook_b.tscn" id="6_se32x"]
+[ext_resource type="PackedScene" uid="uid://doaha4dxeapks" path="res://pieces/biship_w.tscn" id="7_bv3y0"]
+[ext_resource type="PackedScene" uid="uid://darvgpa2ih37j" path="res://pieces/bishop_b.tscn" id="8_25foh"]
+[ext_resource type="PackedScene" uid="uid://dahtky5lghfwg" path="res://pieces/queen_w.tscn" id="9_x0osx"]
+[ext_resource type="PackedScene" uid="uid://bw8h7jbvq53cy" path="res://pieces/queen_b.tscn" id="10_nlwut"]
+[ext_resource type="PackedScene" uid="uid://c6uugboqjkf7v" path="res://pieces/knight_w.tscn" id="11_bpfmt"]
+[ext_resource type="PackedScene" uid="uid://31devxrljjnb" path="res://pieces/knight_b.tscn" id="12_k3mmk"]
+[ext_resource type="PackedScene" uid="uid://ds5oxm478uajl" path="res://pieces/king_w.tscn" id="13_op6gu"]
+[ext_resource type="PackedScene" uid="uid://dt8ej22p0687s" path="res://pieces/king_b.tscn" id="14_jljh4"]
+
+[node name="Table" type="Node2D" unique_id=983835186]
+script = ExtResource("1_2jgy3")
+
+[node name="Tile" parent="." unique_id=2101923140 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 327)
+piece_standing = NodePath("../pawn_w1")
+chess_position = Vector2(1, 1)
+
+[node name="Tile2" parent="." unique_id=1868742820 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 377)
+piece_standing = NodePath("../rook_w0")
+
+[node name="Tile3" parent="." unique_id=227395284 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 327)
+piece_standing = NodePath("../pawn_w0")
+chess_position = Vector2(0, 1)
+
+[node name="Tile4" parent="." unique_id=480699763 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 377)
+piece_standing = NodePath("../knight_w1")
+chess_position = Vector2(1, 0)
+
+[node name="Tile5" parent="." unique_id=1463158176 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 377)
+piece_standing = NodePath("../biship_w2")
+chess_position = Vector2(2, 0)
+
+[node name="Tile6" parent="." unique_id=1174319472 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 327)
+piece_standing = NodePath("../pawn_w2")
+chess_position = Vector2(2, 1)
+
+[node name="Tile7" parent="." unique_id=240367842 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 327)
+piece_standing = NodePath("../pawn_w3")
+chess_position = Vector2(3, 1)
+
+[node name="Tile8" parent="." unique_id=2041998170 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 377)
+piece_standing = NodePath("../queen_w")
+chess_position = Vector2(3, 0)
+
+[node name="Tile9" parent="." unique_id=1500545646 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 327)
+piece_standing = NodePath("../pawn_w5")
+chess_position = Vector2(5, 1)
+
+[node name="Tile10" parent="." unique_id=1524496017 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 377)
+piece_standing = NodePath("../king_w")
+chess_position = Vector2(4, 0)
+
+[node name="Tile11" parent="." unique_id=1329674013 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 327)
+piece_standing = NodePath("../pawn_w4")
+chess_position = Vector2(4, 1)
+
+[node name="Tile12" parent="." unique_id=1846867403 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 377)
+piece_standing = NodePath("../biship_w5")
+chess_position = Vector2(5, 0)
+
+[node name="Tile13" parent="." unique_id=352603018 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 377)
+piece_standing = NodePath("../knight_w6")
+chess_position = Vector2(6, 0)
+
+[node name="Tile14" parent="." unique_id=332169240 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 327)
+piece_standing = NodePath("../pawn_w6")
+chess_position = Vector2(6, 1)
+
+[node name="Tile15" parent="." unique_id=299860000 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 327)
+piece_standing = NodePath("../pawn_w7")
+chess_position = Vector2(7, 1)
+
+[node name="Tile16" parent="." unique_id=1786830194 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 377)
+piece_standing = NodePath("../rook_w7")
+chess_position = Vector2(7, 0)
+
+[node name="Tile17" parent="." unique_id=2139674544 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 227)
+chess_position = Vector2(1, 3)
+
+[node name="Tile18" parent="." unique_id=1243311518 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 277)
+chess_position = Vector2(0, 2)
+
+[node name="Tile19" parent="." unique_id=1395671380 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 227)
+chess_position = Vector2(0, 3)
+
+[node name="Tile20" parent="." unique_id=1328910980 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 277)
+chess_position = Vector2(1, 2)
+
+[node name="Tile21" parent="." unique_id=1756844830 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 277)
+chess_position = Vector2(2, 2)
+
+[node name="Tile22" parent="." unique_id=881539042 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 227)
+chess_position = Vector2(2, 3)
+
+[node name="Tile23" parent="." unique_id=555008253 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 227)
+chess_position = Vector2(3, 3)
+
+[node name="Tile24" parent="." unique_id=912939521 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 277)
+chess_position = Vector2(3, 2)
+
+[node name="Tile25" parent="." unique_id=552195263 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 227)
+chess_position = Vector2(5, 3)
+
+[node name="Tile26" parent="." unique_id=493921511 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 277)
+chess_position = Vector2(4, 2)
+
+[node name="Tile27" parent="." unique_id=1799875957 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 227)
+chess_position = Vector2(4, 3)
+
+[node name="Tile28" parent="." unique_id=1077962697 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 277)
+chess_position = Vector2(5, 2)
+
+[node name="Tile29" parent="." unique_id=1458696110 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 277)
+chess_position = Vector2(6, 2)
+
+[node name="Tile30" parent="." unique_id=1343054862 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 227)
+chess_position = Vector2(6, 3)
+
+[node name="Tile31" parent="." unique_id=1287500900 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 227)
+chess_position = Vector2(7, 3)
+
+[node name="Tile32" parent="." unique_id=1391120892 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 277)
+chess_position = Vector2(7, 2)
+
+[node name="Tile33" parent="." unique_id=316136670 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 127)
+chess_position = Vector2(1, 5)
+
+[node name="Tile34" parent="." unique_id=55798050 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 177)
+chess_position = Vector2(0, 4)
+
+[node name="Tile35" parent="." unique_id=1824990864 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 127)
+chess_position = Vector2(0, 5)
+
+[node name="Tile36" parent="." unique_id=363711137 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 177)
+chess_position = Vector2(1, 4)
+
+[node name="Tile37" parent="." unique_id=1007634868 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 177)
+chess_position = Vector2(2, 4)
+
+[node name="Tile38" parent="." unique_id=1664480883 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 127)
+chess_position = Vector2(2, 5)
+
+[node name="Tile39" parent="." unique_id=1540384235 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 127)
+chess_position = Vector2(3, 5)
+
+[node name="Tile40" parent="." unique_id=2128322847 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 177)
+chess_position = Vector2(3, 4)
+
+[node name="Tile41" parent="." unique_id=749604577 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 127)
+chess_position = Vector2(5, 5)
+
+[node name="Tile42" parent="." unique_id=728323413 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 177)
+chess_position = Vector2(4, 4)
+
+[node name="Tile43" parent="." unique_id=1183525214 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 127)
+chess_position = Vector2(4, 5)
+
+[node name="Tile44" parent="." unique_id=382986675 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 177)
+chess_position = Vector2(5, 4)
+
+[node name="Tile45" parent="." unique_id=1445405558 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 177)
+chess_position = Vector2(6, 4)
+
+[node name="Tile46" parent="." unique_id=104850646 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 127)
+chess_position = Vector2(6, 5)
+
+[node name="Tile47" parent="." unique_id=1455358195 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 127)
+chess_position = Vector2(7, 5)
+
+[node name="Tile48" parent="." unique_id=924575704 groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 177)
+chess_position = Vector2(7, 4)
+
+[node name="Tile49" parent="." unique_id=223271937 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 27)
+piece_standing = NodePath("../knight_b1")
+chess_position = Vector2(1, 7)
+
+[node name="Tile50" parent="." unique_id=1175886330 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 77)
+piece_standing = NodePath("../pawn_b0")
+chess_position = Vector2(0, 6)
+
+[node name="Tile51" parent="." unique_id=460150255 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(25, 27)
+piece_standing = NodePath("../rook_b0")
+chess_position = Vector2(0, 7)
+
+[node name="Tile52" parent="." unique_id=1507768547 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(75, 77)
+piece_standing = NodePath("../pawn_b1")
+chess_position = Vector2(1, 6)
+
+[node name="Tile53" parent="." unique_id=2112955454 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 77)
+piece_standing = NodePath("../pawn_b2")
+chess_position = Vector2(2, 6)
+
+[node name="Tile54" parent="." unique_id=377200112 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(125, 27)
+piece_standing = NodePath("../bishop_b2")
+chess_position = Vector2(2, 7)
+
+[node name="Tile55" parent="." unique_id=1266513514 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 27)
+piece_standing = NodePath("../queen_b")
+chess_position = Vector2(3, 7)
+
+[node name="Tile56" parent="." unique_id=1835558267 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(175, 77)
+piece_standing = NodePath("../pawn_b3")
+chess_position = Vector2(3, 6)
+
+[node name="Tile57" parent="." unique_id=754959502 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 27)
+piece_standing = NodePath("../bishop_b5")
+chess_position = Vector2(5, 7)
+
+[node name="Tile58" parent="." unique_id=1187279990 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 77)
+piece_standing = NodePath("../pawn_b4")
+chess_position = Vector2(4, 6)
+
+[node name="Tile59" parent="." unique_id=1338082542 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(225, 27)
+piece_standing = NodePath("../king_b")
+chess_position = Vector2(4, 7)
+
+[node name="Tile60" parent="." unique_id=722383607 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(275, 77)
+piece_standing = NodePath("../pawn_b5")
+chess_position = Vector2(5, 6)
+
+[node name="Tile61" parent="." unique_id=162229125 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 77)
+piece_standing = NodePath("../pawn_b6")
+chess_position = Vector2(6, 6)
+
+[node name="Tile62" parent="." unique_id=1645952394 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(325, 27)
+piece_standing = NodePath("../knight_b6")
+chess_position = Vector2(6, 7)
+
+[node name="Tile63" parent="." unique_id=1079832659 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 27)
+piece_standing = NodePath("../rook_b7")
+chess_position = Vector2(7, 7)
+
+[node name="Tile64" parent="." unique_id=104693377 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
+position = Vector2(375, 77)
+piece_standing = NodePath("../pawn_b7")
+chess_position = Vector2(7, 6)
+
+[node name="pawn_w0" parent="." unique_id=453193271 instance=ExtResource("3_se32x")]
+position = Vector2(25, 327)
+
+[node name="pawn_w1" parent="." unique_id=1815891549 instance=ExtResource("3_se32x")]
+position = Vector2(75, 327)
+
+[node name="pawn_w2" parent="." unique_id=455604509 instance=ExtResource("3_se32x")]
+position = Vector2(125, 327)
+
+[node name="pawn_w3" parent="." unique_id=1893030106 instance=ExtResource("3_se32x")]
+position = Vector2(175, 327)
+
+[node name="pawn_w4" parent="." unique_id=1187439788 instance=ExtResource("3_se32x")]
+position = Vector2(225, 327)
+
+[node name="pawn_w5" parent="." unique_id=2121636154 instance=ExtResource("3_se32x")]
+position = Vector2(275, 327)
+
+[node name="pawn_w6" parent="." unique_id=500852946 instance=ExtResource("3_se32x")]
+position = Vector2(325, 327)
+
+[node name="pawn_w7" parent="." unique_id=2095667032 instance=ExtResource("3_se32x")]
+position = Vector2(375, 327)
+
+[node name="pawn_b0" parent="." unique_id=253512435 instance=ExtResource("4_bv3y0")]
+position = Vector2(25, 77)
+
+[node name="pawn_b1" parent="." unique_id=1501157374 instance=ExtResource("4_bv3y0")]
+position = Vector2(75, 77)
+
+[node name="pawn_b2" parent="." unique_id=1992789787 instance=ExtResource("4_bv3y0")]
+position = Vector2(125, 77)
+
+[node name="pawn_b3" parent="." unique_id=1483048192 instance=ExtResource("4_bv3y0")]
+position = Vector2(175, 77)
+
+[node name="pawn_b4" parent="." unique_id=1233456205 instance=ExtResource("4_bv3y0")]
+position = Vector2(225, 77)
+
+[node name="pawn_b5" parent="." unique_id=2046597814 instance=ExtResource("4_bv3y0")]
+position = Vector2(275, 77)
+
+[node name="pawn_b6" parent="." unique_id=15432769 instance=ExtResource("4_bv3y0")]
+position = Vector2(325, 77)
+
+[node name="pawn_b7" parent="." unique_id=474489414 instance=ExtResource("4_bv3y0")]
+position = Vector2(375, 77)
+
+[node name="rook_w7" parent="." unique_id=410232807 groups=["pieces_w"] instance=ExtResource("5_2lsw2")]
+position = Vector2(375, 377)
+
+[node name="rook_w0" parent="." unique_id=691889403 groups=["pieces_w"] instance=ExtResource("5_2lsw2")]
+position = Vector2(25, 377)
+
+[node name="rook_b7" parent="." unique_id=392973769 groups=["pieces_b"] instance=ExtResource("6_se32x")]
+position = Vector2(375, 27)
+
+[node name="rook_b0" parent="." unique_id=1799495701 groups=["pieces_b"] instance=ExtResource("6_se32x")]
+position = Vector2(25, 27)
+
+[node name="biship_w5" parent="." unique_id=242697627 instance=ExtResource("7_bv3y0")]
+position = Vector2(275, 377)
+
+[node name="biship_w2" parent="." unique_id=1661671633 instance=ExtResource("7_bv3y0")]
+position = Vector2(125, 377)
+
+[node name="bishop_b2" parent="." unique_id=1022110179 instance=ExtResource("8_25foh")]
+position = Vector2(125, 27)
+
+[node name="bishop_b5" parent="." unique_id=1336916231 instance=ExtResource("8_25foh")]
+position = Vector2(275, 27)
+
+[node name="queen_w" parent="." unique_id=1478340234 instance=ExtResource("9_x0osx")]
+position = Vector2(175, 377)
+
+[node name="queen_b" parent="." unique_id=355965909 instance=ExtResource("10_nlwut")]
+position = Vector2(175, 27)
+
+[node name="knight_w1" parent="." unique_id=790390811 instance=ExtResource("11_bpfmt")]
+position = Vector2(75, 377)
+
+[node name="knight_w6" parent="." unique_id=1494761519 instance=ExtResource("11_bpfmt")]
+position = Vector2(325, 377)
+
+[node name="knight_b1" parent="." unique_id=2036781285 instance=ExtResource("12_k3mmk")]
+position = Vector2(75, 27)
+
+[node name="knight_b6" parent="." unique_id=476086964 instance=ExtResource("12_k3mmk")]
+position = Vector2(325, 27)
+
+[node name="king_w" parent="." unique_id=503925498 instance=ExtResource("13_op6gu")]
+position = Vector2(225, 377)
+
+[node name="king_b" parent="." unique_id=214452216 instance=ExtResource("14_jljh4")]
+position = Vector2(225, 27)

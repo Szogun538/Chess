@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://doaha4dxeapks"]
+
+[ext_resource type="Script" uid="uid://brwxjbktkc7g" path="res://pieces/biship_w.gd" id="1_s382f"]
+[ext_resource type="PackedScene" uid="uid://1i5q2lo2nd5" path="res://pieces/piece.tscn" id="2_q7wym"]
+[ext_resource type="Texture2D" uid="uid://k4tr5xgxcreq" path="res://pictures/Chess_blt60.png" id="3_xxw2r"]
+
+[node name="biship_w" type="Node2D" unique_id=242697627]
+script = ExtResource("1_s382f")
+
+[node name="Piece" parent="." unique_id=83571376 instance=ExtResource("2_q7wym")]
+texture = ExtResource("3_xxw2r")

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c6uugboqjkf7v"]
+
+[ext_resource type="Script" uid="uid://d04qph4x5tlmx" path="res://pieces/knight_w.gd" id="1_mi06t"]
+[ext_resource type="PackedScene" uid="uid://1i5q2lo2nd5" path="res://pieces/piece.tscn" id="1_r4llm"]
+[ext_resource type="Texture2D" uid="uid://clioxg8u83eeo" path="res://pictures/Chess_nlt60.png" id="3_35lhp"]
+
+[node name="knight_w" type="Node2D" unique_id=790390811]
+script = ExtResource("1_mi06t")
+
+[node name="Piece" parent="." unique_id=83571376 instance=ExtResource("1_r4llm")]
+texture = ExtResource("3_35lhp")

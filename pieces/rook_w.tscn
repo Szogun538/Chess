@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cv43d8yiphqby"]
+
+[ext_resource type="Script" uid="uid://bhj4oa7otdik" path="res://pieces/rook_w.gd" id="1_icoqn"]
+[ext_resource type="PackedScene" uid="uid://1i5q2lo2nd5" path="res://pieces/piece.tscn" id="2_ungsg"]
+[ext_resource type="Texture2D" uid="uid://b7765q8cjwea6" path="res://pictures/Chess_rlt60.png" id="3_yqlwr"]
+
+[node name="rook_w" type="Node2D" unique_id=410232807]
+script = ExtResource("1_icoqn")
+
+[node name="Piece" parent="." unique_id=83571376 instance=ExtResource("2_ungsg")]
+texture = ExtResource("3_yqlwr")

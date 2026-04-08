@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://jfq7exbqu5me"]
+
+[ext_resource type="Script" uid="uid://dr5drbm7rf2hp" path="res://pieces/pawn_w.gd" id="1_dwv14"]
+[ext_resource type="PackedScene" uid="uid://1i5q2lo2nd5" path="res://pieces/piece.tscn" id="2_5vwv5"]
+[ext_resource type="Texture2D" uid="uid://c0xec0jxh821h" path="res://pictures/Chess_plt60.png" id="3_va2hl"]
+
+[node name="Pawn_w" type="Node2D" unique_id=455604509]
+script = ExtResource("1_dwv14")
+
+[node name="Piece" parent="." unique_id=83571376 instance=ExtResource("2_5vwv5")]
+texture = ExtResource("3_va2hl")
