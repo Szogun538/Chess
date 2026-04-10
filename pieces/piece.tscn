@@ -9,6 +9,8 @@ size = Vector2(0, 0)
 script = ExtResource("1_5m6vo")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1397248499]
+light_mask = 2
+visibility_layer = 2
 scale = Vector2(0.8, 0.8)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=759480104]

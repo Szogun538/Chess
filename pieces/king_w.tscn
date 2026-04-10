@@ -4,8 +4,27 @@
 [ext_resource type="Script" uid="uid://cesmloo6ftyp4" path="res://pieces/king_w.gd" id="1_xq85e"]
 [ext_resource type="Texture2D" uid="uid://dl6bww25uv8gn" path="res://pictures/Chess_klt60.png" id="3_q165v"]
 
+[sub_resource type="Gradient" id="Gradient_q165v"]
+offsets = PackedFloat32Array(0.1, 0.8)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7s6in"]
+gradient = SubResource("Gradient_q165v")
+width = 50
+height = 50
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="king_w" type="Node2D" unique_id=503925498]
 script = ExtResource("1_xq85e")
 
 [node name="Piece" parent="." unique_id=83571376 instance=ExtResource("1_l16fs")]
 texture = ExtResource("3_q165v")
+
+[node name="Check" type="PointLight2D" parent="." unique_id=1640832294]
+visible = false
+color = Color(0.8288101, 2.7193873e-06, 5.7756904e-07, 1)
+energy = 2.3
+blend_mode = 2
+texture = SubResource("GradientTexture2D_7s6in")

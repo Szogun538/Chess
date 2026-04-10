@@ -5,11 +5,15 @@ var is_white = false
 var current_position: Vector2
 
 # Called when the node enters the scene tree for the first time.
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Piece.b_dragged.connect(_on_b_dragged)
 	$Piece.dropped.connect(_on_b_dropped)
 	$Piece.succsesfull_drop.connect(_on_b_succsesfull_drop)
 	moves(current_position, 2)
+
+func _process(delta: float) -> void:
+	pass
 
 func _on_b_dragged():
 	var tile_position = $Piece.start_tile.chess_position
@@ -32,8 +36,15 @@ func _on_b_succsesfull_drop():
 	table.reset_attack(not is_white)
 	moves(start_tile_position, 3)
 	moves(end_tile_position, 2)
+	reset_check()
 	table.tile_base_on_position(start_tile_position).reset_lamps()
 	table.tile_base_on_position(current_position).reset_lamps()
+
+func on_check():
+	$Check.show()
+
+func reset_check():
+	$Check.hide()
 
 func reset_light():
 	moves(current_position, 3)
@@ -41,91 +52,16 @@ func reset_light():
 
 
 func moves(posi: Vector2, mode: int):
-	var change_vector = posi + Vector2(0,1)
-	if posi.y < 7:
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
-	if posi.x < 7 and posi.y < 7:
-		change_vector = posi + Vector2(1,1)
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
-	if posi.x < 7:
-		change_vector = posi + Vector2(1,0)
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
-	if posi.x < 7 and posi.y > 0:
-		change_vector = posi + Vector2(1,-1)
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
-	if posi.y > 0:
-		change_vector = posi + Vector2(0,-1)
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
-	if posi.x > 0 and posi.y > 0:
-		change_vector = posi + Vector2(-1,-1)
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
-	if posi.x > 0:
-		change_vector = posi + Vector2(-1,0)
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
-	if posi.x > 0 and posi.y < 7:
-		change_vector = posi + Vector2(-1,1)
-		if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-			if mode == 0:
-				table.change_position_state(change_vector, table.available(change_vector, is_white))
-		if mode == 1:
-			table.tile_base_on_position(change_vector).check_occ()
-		if mode == 2:
-			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
-		if mode == 3:
-			table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
+	var positions: Array[Vector2] = [Vector2(0,1),Vector2(1,1),Vector2(1,0),Vector2(1,-1),Vector2(0,-1),Vector2(-1,-1),Vector2(-1,0),Vector2(-1,1)]
+	for dir in positions:
+		var change_vector = posi + dir
+		if dir == positions[0] and posi.y < 7 or dir == positions[1] and posi.y < 7 and posi.x < 7 or dir == positions[2] and posi.x < 7 or dir == positions[3] and posi.y > 0 and posi.x < 7 or dir == positions[4] and posi.y > 0 or dir == positions[5] and posi.x > 0 and posi.y > 0 or dir == positions[6] and posi.x > 0 or dir == positions[7] and posi.x > 0 and posi.y < 7:
+			if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
+				if mode == 0:
+					table.change_position_state(change_vector, table.available(change_vector, is_white))
+			if mode == 1:
+				table.tile_base_on_position(change_vector).check_occ()
+			if mode == 2:
+				table.tile_base_on_position(change_vector).add_lamp(self, is_white)
+			if mode == 3:
+				table.tile_base_on_position(change_vector).remove_lamp(self, is_white)

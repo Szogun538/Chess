@@ -90,6 +90,7 @@ func moves(posi: Vector2, mode: int):
 					occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
 					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
 						if occupied_scan_tiles.size() == 1:
+							table.tile_base_on_position(loop_tile).piece_standing.on_check()
 							table.piece_checking = self
 						for i in scan_tiles:
 							if i.piece_standing == null:
@@ -103,6 +104,9 @@ func moves(posi: Vector2, mode: int):
 								i.path_to_king_from.append(self)
 						break
 			if mode == 5:
+				if table.tile_base_on_position(loop_tile).piece_standing != null:
+					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
+						table.tile_base_on_position(loop_tile).piece_standing.reset_check()
 				if table.piece_checking == self:
 					table.piece_checking = null
 				table.tile_base_on_position(loop_tile).path_to_king_from.erase(self)

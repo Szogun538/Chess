@@ -81,8 +81,12 @@ func moves(posi: Vector2, mode: int):
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing != null:
 					if table.tile_base_on_position(change_vector).piece_standing.name == "king_w":
+						table.tile_base_on_position(change_vector).piece_standing.on_check()
 						table.piece_checking = self
 			if mode == 5:
+				if table.tile_base_on_position(change_vector).piece_standing != null:
+					if table.tile_base_on_position(change_vector).piece_standing.name == "king_w":
+						table.tile_base_on_position(change_vector).piece_standing.reset_check()
 				if table.piece_checking == self:
 					table.piece_checking = null
 

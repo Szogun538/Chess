@@ -10,13 +10,13 @@ var protecting_from: Array[Node2D] = []
 var path_to_king_from: Array[Node2D] = []
 
 func _process(delta: float) -> void:
-	$Label.text = ""
-	if protecting_from.size() > 0:
-		for i in protecting_from:
-			$Label.text += " Pro: " + str(i.name) + "\n"
-	if path_to_king_from.size() > 0:
-		for i in path_to_king_from:
-			$Label.text += " Path: " + str(i.name) + "\n"
+	# $Label.text = ""
+	# if protecting_from.size() > 0:
+	# 	for i in protecting_from:
+	# 		$Label.text += " Pro: " + str(i.name) + "\n"
+	# if path_to_king_from.size() > 0:
+	# 	for i in path_to_king_from:
+	# 		$Label.text += " Path: " + str(i.name) + "\n"
 	pass
 
 func _ready():

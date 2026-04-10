@@ -88,6 +88,7 @@ func moves(posi: Vector2, mode: int):
 				table.tile_base_on_position(change_vector).check_occ()
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
+					table.tile_base_on_position(change_vector).piece_standing.on_check()
 					table.piece_checking = self
 		if mode == 2:
 			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
@@ -105,6 +106,7 @@ func moves(posi: Vector2, mode: int):
 				table.tile_base_on_position(change_vector).check_occ()
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
+					table.tile_base_on_position(change_vector).piece_standing.on_check()
 					table.piece_checking = self
 		if mode == 2:
 			table.tile_base_on_position(change_vector).add_lamp(self, is_white)
@@ -130,5 +132,13 @@ func moves(posi: Vector2, mode: int):
 		if mode == 1:
 			table.tile_base_on_position(change_vector).check_occ()
 	if mode == 5:
+		change_vector = posi + Vector2(-1,1)
+		if table.tile_base_on_position(change_vector).piece_standing != null:
+			if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
+				table.tile_base_on_position(change_vector).piece_standing.reset_check()
+		change_vector = posi + Vector2(1,1)
+		if table.tile_base_on_position(change_vector).piece_standing != null:
+			if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
+				table.tile_base_on_position(change_vector).piece_standing.reset_check()
 		if table.piece_checking == self:
 			table.piece_checking = null
