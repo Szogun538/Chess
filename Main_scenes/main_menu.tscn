@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://brsi0ke3depj2"]
+
+[ext_resource type="Script" uid="uid://bx1y8g3wixppm" path="res://Main_scenes/button.gd" id="1_timg8"]
+[ext_resource type="Script" uid="uid://b021kct3dlk3f" path="res://Main_scenes/main_menu.gd" id="1_yolfb"]
+
+[node name="MainMenu" type="Node2D" unique_id=1562956453]
+script = ExtResource("1_yolfb")
+
+[node name="Button" type="Button" parent="." unique_id=487137315]
+offset_left = 23.0
+offset_top = 15.0
+offset_right = 156.0
+offset_bottom = 107.0
+text = "New Game"
+script = ExtResource("1_timg8")

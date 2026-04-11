@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://88t1rihm5yun"]
 
-[ext_resource type="Script" uid="uid://brqespq1xkgtv" path="res://pieces/table.gd" id="1_2jgy3"]
+[ext_resource type="Script" uid="uid://brqespq1xkgtv" path="res://Main_scenes/table.gd" id="1_2jgy3"]
 [ext_resource type="PackedScene" uid="uid://cqf2s5lcl5moj" path="res://tile.tscn" id="2_2lsw2"]
 [ext_resource type="PackedScene" uid="uid://jfq7exbqu5me" path="res://pieces/pawn_w.tscn" id="3_se32x"]
 [ext_resource type="PackedScene" uid="uid://cwpjun8rb0rbu" path="res://pieces/pawn_b.tscn" id="4_bv3y0"]
 [ext_resource type="PackedScene" uid="uid://cv43d8yiphqby" path="res://pieces/rook_w.tscn" id="5_2lsw2"]
 [ext_resource type="PackedScene" uid="uid://yj3s6q3yal2u" path="res://pieces/rook_b.tscn" id="6_se32x"]
-[ext_resource type="PackedScene" uid="uid://doaha4dxeapks" path="res://pieces/biship_w.tscn" id="7_bv3y0"]
+[ext_resource type="PackedScene" uid="uid://doaha4dxeapks" path="res://pieces/bishop_w.tscn" id="7_bv3y0"]
 [ext_resource type="PackedScene" uid="uid://darvgpa2ih37j" path="res://pieces/bishop_b.tscn" id="8_25foh"]
 [ext_resource type="PackedScene" uid="uid://dahtky5lghfwg" path="res://pieces/queen_w.tscn" id="9_x0osx"]
 [ext_resource type="PackedScene" uid="uid://bw8h7jbvq53cy" path="res://pieces/queen_b.tscn" id="10_nlwut"]
@@ -39,7 +39,7 @@ chess_position = Vector2(1, 0)
 
 [node name="Tile5" parent="." unique_id=1463158176 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
 position = Vector2(125, 377)
-piece_standing = NodePath("../biship_w2")
+piece_standing = NodePath("../bisho\\p_w2")
 chess_position = Vector2(2, 0)
 
 [node name="Tile6" parent="." unique_id=1174319472 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
@@ -74,7 +74,7 @@ chess_position = Vector2(4, 1)
 
 [node name="Tile12" parent="." unique_id=1846867403 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
 position = Vector2(275, 377)
-piece_standing = NodePath("../biship_w5")
+piece_standing = NodePath("../bishop_w5")
 chess_position = Vector2(5, 0)
 
 [node name="Tile13" parent="." unique_id=352603018 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
@@ -365,10 +365,10 @@ position = Vector2(375, 27)
 [node name="rook_b0" parent="." unique_id=1799495701 groups=["pieces_b"] instance=ExtResource("6_se32x")]
 position = Vector2(25, 27)
 
-[node name="biship_w5" parent="." unique_id=242697627 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
+[node name="bishop_w5" parent="." unique_id=242697627 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
 position = Vector2(275, 377)
 
-[node name="biship_w2" parent="." unique_id=1661671633 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
+[node name="bisho\\p_w2" parent="." unique_id=1661671633 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
 position = Vector2(125, 377)
 
 [node name="bishop_b2" parent="." unique_id=1022110179 groups=["pieces_b"] instance=ExtResource("8_25foh")]

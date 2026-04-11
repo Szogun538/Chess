@@ -7,6 +7,11 @@ extends Node2D
 signal change_state
 var turn: bool = true
 var piece_checking: Node2D = null
+var check_protectors: bool = true
+var game_over = false
+
+# func _process(delta: float) -> void:
+# 	print(check_protectors)
 
 func tile_base_on_position(chess_posistion: Vector2):
 	var tiles = get_tree().get_nodes_in_group("Tiles")

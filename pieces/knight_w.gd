@@ -19,6 +19,8 @@ func _on_b_dropped():
 	var tile_position = $Piece.start_tile.chess_position
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
+	if table.game_over:
+		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
 func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
@@ -27,17 +29,17 @@ func _on_b_succsesfull_drop():
 	current_position = end_tile_position
 	moves(start_tile_position, 3)
 	moves(start_tile_position, 5)
+	moves(end_tile_position, 2)
+	moves(end_tile_position, 1)
+	table.tile_base_on_position(current_position).reset_lamps()
+	table.tile_base_on_position(start_tile_position).reset_lamps()
 	if table.tile_base_on_position(current_position).path_to_king_from.size() > 0:
 		table.tile_base_on_position(current_position).reset_attack()
 	if table.tile_base_on_position(current_position).protecting_from.size() > 0:
 		table.tile_base_on_position(current_position).reset_attack()
 	if table.tile_base_on_position(start_tile_position).path_to_king_from.size() > 0:
 		table.tile_base_on_position(start_tile_position).reset_attack()
-	moves(end_tile_position, 2)
-	moves(end_tile_position, 1)
 	moves(end_tile_position, 4)
-	table.tile_base_on_position(current_position).reset_lamps()
-	table.tile_base_on_position(start_tile_position).reset_lamps()
 
 func reset_light():
 	moves(current_position, 3)
@@ -81,8 +83,10 @@ func moves(posi: Vector2, mode: int):
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing != null:
 					if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
-						table.tile_base_on_position(change_vector).piece_standing.on_check()
 						table.piece_checking = self
+						if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
+							table.check_protectors = false
+						table.tile_base_on_position(change_vector).piece_standing.on_check()
 			if mode == 5:
 				if table.tile_base_on_position(change_vector).piece_standing != null:
 					if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":

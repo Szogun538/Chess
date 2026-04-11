@@ -9,14 +9,13 @@ var black_lamps: Array[Node2D] = []
 var protecting_from: Array[Node2D] = []
 var path_to_king_from: Array[Node2D] = []
 
+#temp
+var label_text: String = ""
+
 func _process(delta: float) -> void:
-	# $Label.text = ""
-	# if protecting_from.size() > 0:
-	# 	for i in protecting_from:
-	# 		$Label.text += " Pro: " + str(i.name) + "\n"
-	# if path_to_king_from.size() > 0:
-	# 	for i in path_to_king_from:
-	# 		$Label.text += " Path: " + str(i.name) + "\n"
+	# $Label.text = label_text
+	# for i in black_lamps:
+	# 	$Label.text += str(i.name) + "\n"
 	pass
 
 func _ready():
@@ -65,6 +64,38 @@ func remove_lamp(piece: Node2D, color: bool):
 				exist = true
 		if exist:
 			black_lamps.erase(piece)
+
+func check_for_pawn(current_position: Vector2, color: bool, mode: bool):
+	var defence: bool = false
+	if color:
+		for i in white_lamps:
+			if i.name.left(6) == "pawn_w":
+				if i.current_position == chess_position - Vector2(0,1) or i.current_position == chess_position - Vector2(0,2) and i.current_position.y == 1:
+					defence = true
+				else:
+					if mode:
+						return false 
+			else:
+				if mode:
+					return false
+				else:
+					if i.name != "king_w":
+						return true
+	else:
+		for i in black_lamps:
+			if i.name.left(6) == "pawn_b":
+				if i.current_position == chess_position - Vector2(0,-1) or i.current_position == chess_position - Vector2(0,-2) and i.current_position.y == 6:
+					defence = true
+				else:
+					if mode:
+						return false 
+			else:
+				if mode:
+					return false
+				else:
+					if i.name != "king_b":
+						return true
+	return defence
 
 func reset_lamps():
 	if white_lamps.size() > 0:

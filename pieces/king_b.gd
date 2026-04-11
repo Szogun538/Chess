@@ -3,6 +3,7 @@ extends Node2D
 var is_white = false
 @onready var table = get_parent()
 var current_position: Vector2
+var available_to_move: bool = false
 
 # Called when the node enters the scene tree for the first time.
 # Called when the node enters the scene tree for the first time.
@@ -32,19 +33,25 @@ func _on_b_succsesfull_drop():
 	current_position = end_tile_position
 	if table.piece_checking != null:
 		table.piece_checking.reset_attacking()
-	table.tile_base_on_position(start_tile_position).reset_attack()
-	table.reset_attack(not is_white)
 	moves(start_tile_position, 3)
 	moves(end_tile_position, 2)
 	reset_check()
 	table.tile_base_on_position(start_tile_position).reset_lamps()
 	table.tile_base_on_position(current_position).reset_lamps()
+	table.reset_attack(not is_white)
+	table.tile_base_on_position(start_tile_position).reset_attack()
 
 func on_check():
 	$Check.show()
+	moves(current_position, 4)
+	if available_to_move == false and not table.check_protectors:
+		table.game_over = true
+	if not table.check_protectors:
+		table.check_protectors = true
 
 func reset_check():
 	$Check.hide()
+	available_to_move = false
 
 func reset_light():
 	moves(current_position, 3)
@@ -56,12 +63,21 @@ func moves(posi: Vector2, mode: int):
 	for dir in positions:
 		var change_vector = posi + dir
 		if dir == positions[0] and posi.y < 7 or dir == positions[1] and posi.y < 7 and posi.x < 7 or dir == positions[2] and posi.x < 7 or dir == positions[3] and posi.y > 0 and posi.x < 7 or dir == positions[4] and posi.y > 0 or dir == positions[5] and posi.x > 0 and posi.y > 0 or dir == positions[6] and posi.x > 0 or dir == positions[7] and posi.x > 0 and posi.y < 7:
-			if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
-				if mode == 0:
-					table.change_position_state(change_vector, table.available(change_vector, is_white))
+			if mode == 0:
+				if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
+					table.change_position_state(change_vector, table.available(change_vector,is_white))
+				elif table.tile_base_on_position(change_vector).check_for_pawn(change_vector,not is_white, true):
+					table.change_position_state(change_vector, table.available(change_vector,is_white))
 			if mode == 1:
 				table.tile_base_on_position(change_vector).check_occ()
 			if mode == 2:
 				table.tile_base_on_position(change_vector).add_lamp(self, is_white)
 			if mode == 3:
 				table.tile_base_on_position(change_vector).remove_lamp(self, is_white)
+			if mode == 4:
+				if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
+					if not (table.available(change_vector,is_white)):
+						available_to_move = true
+				elif table.tile_base_on_position(change_vector).check_for_pawn(change_vector,not is_white, true):
+					if not (table.available(change_vector,is_white)):
+						available_to_move = true
