@@ -12,6 +12,7 @@ var start_tile = null
 signal b_dragged
 signal dropped
 signal succsesfull_drop
+signal dropping
 
 func _ready() -> void:
 	$Sprite2D.texture = texture
@@ -34,6 +35,7 @@ func _input(event):
 			if current_tile != null:
 				var allowed = current_tile.accept_drop()
 				if not allowed:
+					emit_signal("dropping")
 					if current_tile.piece_standing == null:
 						current_tile.is_occupied = true
 						p_parent.global_position = current_tile.position

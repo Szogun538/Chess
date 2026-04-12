@@ -27,6 +27,12 @@ window/stretch/scale=2.0
 movie_writer/disable_vsync=true
 movie_writer/fps=300
 
+[importer_defaults]
+
+animation_library={
+&"animation/fps": 120.0
+}
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

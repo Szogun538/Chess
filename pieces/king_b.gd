@@ -4,6 +4,8 @@ var is_white = false
 @onready var table = get_parent()
 var current_position: Vector2
 var available_to_move: bool = false
+var moved: bool = false
+var castling: bool = false
 
 # Called when the node enters the scene tree for the first time.
 # Called when the node enters the scene tree for the first time.
@@ -11,6 +13,7 @@ func _ready() -> void:
 	$Piece.b_dragged.connect(_on_b_dragged)
 	$Piece.dropped.connect(_on_b_dropped)
 	$Piece.succsesfull_drop.connect(_on_b_succsesfull_drop)
+	$Piece.dropping.connect(_on_dropping)
 	moves(current_position, 2)
 
 func _process(delta: float) -> void:
@@ -25,11 +28,29 @@ func _on_b_dropped():
 	var tile_position = $Piece.start_tile.chess_position
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
+	if castling:
+		if current_position == Vector2(0,7):
+			table.tile_base_on_position(Vector2(0,7)).piece_standing.position = table.tile_base_on_position(Vector2(2,7)).position
+			table.tile_base_on_position(Vector2(2,7)).piece_standing = table.tile_base_on_position(Vector2(0,7)).piece_standing
+			table.tile_base_on_position(Vector2(0,7)).piece_standing = null
+			change_for_castling(Vector2(2,7),current_position)
+			castling = false
+		if current_position == Vector2(7,7):
+			table.tile_base_on_position(Vector2(7,7)).piece_standing.position = table.tile_base_on_position(Vector2(6,7)).position
+			table.tile_base_on_position(Vector2(6,7)).piece_standing = table.tile_base_on_position(Vector2(7,7)).piece_standing
+			table.tile_base_on_position(Vector2(7,7)).piece_standing = null
+			change_for_castling(Vector2(6,7),current_position)
+			castling = false
 
 func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
 	var start_tile_position = $Piece.start_tile.chess_position
 	var end_tile_position = $Piece.current_tile.chess_position
+	change_for_castling(end_tile_position,start_tile_position)
+
+func change_for_castling(end_pos: Vector2, start_pos: Vector2):
+	var end_tile_position = end_pos
+	var start_tile_position = start_pos
 	current_position = end_tile_position
 	if table.piece_checking != null:
 		table.piece_checking.reset_attacking()
@@ -48,6 +69,21 @@ func on_check():
 		table.game_over = true
 	if not table.check_protectors:
 		table.check_protectors = true
+
+func _on_dropping():
+	var end_tile_position = $Piece.current_tile.chess_position
+	if end_tile_position == Vector2(0,7) or end_tile_position == Vector2(2,7):
+		table.tile_base_on_position(Vector2(0,7)).piece_standing.position = table.tile_base_on_position(Vector2(3,7)).position
+		table.tile_base_on_position(Vector2(3,7)).piece_standing = table.tile_base_on_position(Vector2(0,7)).piece_standing
+		table.tile_base_on_position(Vector2(0,7)).piece_standing = null
+		table.tile_base_on_position(Vector2(3,7)).piece_standing.change_for_castling(Vector2(3,7), Vector2(0,7))
+		castling = true
+	if end_tile_position == Vector2(7,7) or end_tile_position == Vector2(6,7):
+		table.tile_base_on_position(Vector2(7,7)).piece_standing.position = table.tile_base_on_position(Vector2(5,7)).position
+		table.tile_base_on_position(Vector2(5,7)).piece_standing = table.tile_base_on_position(Vector2(7,7)).piece_standing
+		table.tile_base_on_position(Vector2(7,7)).piece_standing = null
+		table.tile_base_on_position(Vector2(5,7)).piece_standing.change_for_castling(Vector2(5,7), Vector2(7,7))
+		castling = true
 
 func reset_check():
 	$Check.hide()
@@ -81,3 +117,35 @@ func moves(posi: Vector2, mode: int):
 				elif table.tile_base_on_position(change_vector).check_for_pawn(change_vector,not is_white, true):
 					if not (table.available(change_vector,is_white)):
 						available_to_move = true
+	if not moved:
+		var directions: Array[Vector2] = [Vector2(1,0),Vector2(-1,0)]
+		var p_on_the_way1: bool = false
+		var p_on_the_way2: bool = false
+		if mode == 0 or mode == 1:
+			for dire in directions:
+				var loop_pos = posi
+				while (loop_pos.x < 6 and dire.x > 0) or (loop_pos.x > 1 and dire.x < 0) :
+					loop_pos += dire
+					if table.tile_base_on_position(loop_pos).piece_standing != null or table.tile_base_on_position(loop_pos).white_lamps.size() > 0:
+						if dire.x > 0:
+							p_on_the_way1 = true
+						if dire.x < 0: 
+							p_on_the_way2 = true
+		if table.tile_base_on_position(Vector2(7,7)).piece_standing != null:
+			if table.tile_base_on_position(Vector2(7,7)).piece_standing.name == "rook_b7":
+				if not table.tile_base_on_position(Vector2(7,7)).piece_standing.moved and not p_on_the_way1:
+					if mode == 0:
+						table.change_position_state(Vector2(7,7), false)
+						table.change_position_state(Vector2(6,7), false)
+		if mode == 1:
+			table.tile_base_on_position(Vector2(7,7)).check_occ()
+			table.tile_base_on_position(Vector2(6,7)).check_occ()
+		if table.tile_base_on_position(Vector2(0,7)).piece_standing != null:
+			if table.tile_base_on_position(Vector2(0,7)).piece_standing.name == "rook_b0":
+				if not table.tile_base_on_position(Vector2(0,7)).piece_standing.moved and not p_on_the_way2:
+					if mode == 0:
+						table.change_position_state(Vector2(0,7), false)
+						table.change_position_state(Vector2(2,7), false)
+		if mode == 1:
+			table.tile_base_on_position(Vector2(0,7)).check_occ()
+			table.tile_base_on_position(Vector2(2,7)).check_occ()

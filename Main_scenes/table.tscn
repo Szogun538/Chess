@@ -39,7 +39,7 @@ chess_position = Vector2(1, 0)
 
 [node name="Tile5" parent="." unique_id=1463158176 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
 position = Vector2(125, 377)
-piece_standing = NodePath("../bisho\\p_w2")
+piece_standing = NodePath("../bishop_w2")
 chess_position = Vector2(2, 0)
 
 [node name="Tile6" parent="." unique_id=1174319472 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]
@@ -368,7 +368,7 @@ position = Vector2(25, 27)
 [node name="bishop_w5" parent="." unique_id=242697627 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
 position = Vector2(275, 377)
 
-[node name="bisho\\p_w2" parent="." unique_id=1661671633 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
+[node name="bishop_w2" parent="." unique_id=1661671633 groups=["pieces_w"] instance=ExtResource("7_bv3y0")]
 position = Vector2(125, 377)
 
 [node name="bishop_b2" parent="." unique_id=1022110179 groups=["pieces_b"] instance=ExtResource("8_25foh")]

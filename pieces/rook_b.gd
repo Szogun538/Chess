@@ -3,6 +3,7 @@ extends Node2D
 var is_white = false
 @onready var table = get_parent()
 var current_position: Vector2
+var moved: bool = false
 
 
 func _ready() -> void:
@@ -27,6 +28,11 @@ func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
 	var end_tile_position = $Piece.current_tile.chess_position
 	var start_tile_position = $Piece.start_tile.chess_position
+	change_for_castling(end_tile_position, start_tile_position)
+
+func change_for_castling(end_pos: Vector2, start_pos: Vector2):
+	var end_tile_position = end_pos
+	var start_tile_position = start_pos
 	current_position = end_tile_position
 	moves(start_tile_position, 3)
 	moves(start_tile_position, 5)
@@ -40,7 +46,9 @@ func _on_b_succsesfull_drop():
 		table.tile_base_on_position(current_position).reset_attack()
 	if table.tile_base_on_position(start_tile_position).path_to_king_from.size() > 0:
 		table.tile_base_on_position(start_tile_position).reset_attack()
+	moved = true
 	moves(end_tile_position, 4)
+
 
 func reset_light():
 	moves(current_position, 3)
