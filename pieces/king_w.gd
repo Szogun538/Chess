@@ -16,6 +16,11 @@ func _ready() -> void:
 	moves(current_position, 2)
 
 func _process(delta: float) -> void:
+	# if is_white == table.turn and table.piece_checking != null and not $Check.visible:
+	# 	print("halo")
+	# 	$Check.show()
+	# elif is_white != table.turn and $Check.visible:
+	# 	$Check.hide()
 	pass
 
 func _on_b_dragged():
@@ -33,13 +38,11 @@ func _on_b_dropped():
 			table.tile_base_on_position(Vector2(2,0)).piece_standing = table.tile_base_on_position(Vector2(0,0)).piece_standing
 			table.tile_base_on_position(Vector2(0,0)).piece_standing = null
 			change_for_castling(Vector2(2,0),current_position)
-			castling = false
 		if current_position == Vector2(7,0):
 			table.tile_base_on_position(Vector2(7,0)).piece_standing.position = table.tile_base_on_position(Vector2(6,0)).position
 			table.tile_base_on_position(Vector2(6,0)).piece_standing = table.tile_base_on_position(Vector2(7,0)).piece_standing
 			table.tile_base_on_position(Vector2(7,0)).piece_standing = null
 			change_for_castling(Vector2(6,0),current_position)
-			castling = false
 
 func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
@@ -60,21 +63,24 @@ func change_for_castling(end_pos: Vector2, start_pos: Vector2):
 	table.tile_base_on_position(current_position).reset_lamps()
 	table.reset_attack(not is_white)
 	table.tile_base_on_position(start_tile_position).reset_attack()
+	if not moved:
+		moved = true
 
 func _on_dropping():
-	var end_tile_position = $Piece.current_tile.chess_position
-	if end_tile_position == Vector2(0,0) or end_tile_position == Vector2(2,0):
-		table.tile_base_on_position(Vector2(0,0)).piece_standing.position = table.tile_base_on_position(Vector2(3,0)).position
-		table.tile_base_on_position(Vector2(3,0)).piece_standing = table.tile_base_on_position(Vector2(0,0)).piece_standing
-		table.tile_base_on_position(Vector2(0,0)).piece_standing = null
-		table.tile_base_on_position(Vector2(3,0)).piece_standing.change_for_castling(Vector2(3,0), Vector2(0,0))
-		castling = true
-	if end_tile_position == Vector2(7,0) or end_tile_position == Vector2(6,0):
-		table.tile_base_on_position(Vector2(7,0)).piece_standing.position = table.tile_base_on_position(Vector2(5,0)).position
-		table.tile_base_on_position(Vector2(5,0)).piece_standing = table.tile_base_on_position(Vector2(7,0)).piece_standing
-		table.tile_base_on_position(Vector2(7,0)).piece_standing = null
-		table.tile_base_on_position(Vector2(5,0)).piece_standing.change_for_castling(Vector2(5,0), Vector2(7,0))
-		castling = true
+	if not moved:
+		var end_tile_position = $Piece.current_tile.chess_position
+		if end_tile_position == Vector2(0,0) or end_tile_position == Vector2(2,0):
+			table.tile_base_on_position(Vector2(0,0)).piece_standing.position = table.tile_base_on_position(Vector2(3,0)).position
+			table.tile_base_on_position(Vector2(3,0)).piece_standing = table.tile_base_on_position(Vector2(0,0)).piece_standing
+			table.tile_base_on_position(Vector2(0,0)).piece_standing = null
+			table.tile_base_on_position(Vector2(3,0)).piece_standing.change_for_castling(Vector2(3,0), Vector2(0,0))
+			castling = true
+		if end_tile_position == Vector2(7,0) or end_tile_position == Vector2(6,0):
+			table.tile_base_on_position(Vector2(7,0)).piece_standing.position = table.tile_base_on_position(Vector2(5,0)).position
+			table.tile_base_on_position(Vector2(5,0)).piece_standing = table.tile_base_on_position(Vector2(7,0)).piece_standing
+			table.tile_base_on_position(Vector2(7,0)).piece_standing = null
+			table.tile_base_on_position(Vector2(5,0)).piece_standing.change_for_castling(Vector2(5,0), Vector2(7,0))
+			castling = true
 
 func on_check():
 	$Check.show()

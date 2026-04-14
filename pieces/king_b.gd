@@ -60,21 +60,24 @@ func change_for_castling(end_pos: Vector2, start_pos: Vector2):
 	table.tile_base_on_position(current_position).reset_lamps()
 	table.reset_attack(not is_white)
 	table.tile_base_on_position(start_tile_position).reset_attack()
+	if not moved:
+		moved = true
 
 func _on_dropping():
-	var end_tile_position = $Piece.current_tile.chess_position
-	if end_tile_position == Vector2(0,7) or end_tile_position == Vector2(2,7):
-		table.tile_base_on_position(Vector2(0,7)).piece_standing.position = table.tile_base_on_position(Vector2(3,7)).position
-		table.tile_base_on_position(Vector2(3,7)).piece_standing = table.tile_base_on_position(Vector2(0,7)).piece_standing
-		table.tile_base_on_position(Vector2(0,7)).piece_standing = null
-		table.tile_base_on_position(Vector2(3,7)).piece_standing.change_for_castling(Vector2(3,7), Vector2(0,7))
-		castling = true
-	if end_tile_position == Vector2(7,7) or end_tile_position == Vector2(6,7):
-		table.tile_base_on_position(Vector2(7,7)).piece_standing.position = table.tile_base_on_position(Vector2(5,7)).position
-		table.tile_base_on_position(Vector2(5,7)).piece_standing = table.tile_base_on_position(Vector2(7,7)).piece_standing
-		table.tile_base_on_position(Vector2(7,7)).piece_standing = null
-		table.tile_base_on_position(Vector2(5,7)).piece_standing.change_for_castling(Vector2(5,7), Vector2(7,7))
-		castling = true
+	if not moved:
+		var end_tile_position = $Piece.current_tile.chess_position
+		if end_tile_position == Vector2(0,7) or end_tile_position == Vector2(2,7):
+			table.tile_base_on_position(Vector2(0,7)).piece_standing.position = table.tile_base_on_position(Vector2(3,7)).position
+			table.tile_base_on_position(Vector2(3,7)).piece_standing = table.tile_base_on_position(Vector2(0,7)).piece_standing
+			table.tile_base_on_position(Vector2(0,7)).piece_standing = null
+			table.tile_base_on_position(Vector2(3,7)).piece_standing.change_for_castling(Vector2(3,7), Vector2(0,7))
+			castling = true
+		if end_tile_position == Vector2(7,7) or end_tile_position == Vector2(6,7):
+			table.tile_base_on_position(Vector2(7,7)).piece_standing.position = table.tile_base_on_position(Vector2(5,7)).position
+			table.tile_base_on_position(Vector2(5,7)).piece_standing = table.tile_base_on_position(Vector2(7,7)).piece_standing
+			table.tile_base_on_position(Vector2(7,7)).piece_standing = null
+			table.tile_base_on_position(Vector2(5,7)).piece_standing.change_for_castling(Vector2(5,7), Vector2(7,7))
+			castling = true
 
 func on_check():
 	$Check.show()

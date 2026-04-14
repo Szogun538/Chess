@@ -94,7 +94,8 @@ func moves(posi: Vector2, mode: int):
 				if mode == 2:
 					table.tile_base_on_position(loop_tile).add_lamp(self, is_white)
 				if table.tile_base_on_position(loop_tile).piece_standing != null:
-					break
+					if table.tile_base_on_position(loop_tile).piece_standing.name != "king_b":
+						break
 			if mode == 3:
 				table.tile_base_on_position(loop_tile).remove_lamp(self, is_white)
 			if mode == 4:
