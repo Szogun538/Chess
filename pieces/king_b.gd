@@ -8,7 +8,6 @@ var moved: bool = false
 var castling: bool = false
 
 # Called when the node enters the scene tree for the first time.
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Piece.b_dragged.connect(_on_b_dragged)
 	$Piece.dropped.connect(_on_b_dropped)
@@ -62,14 +61,6 @@ func change_for_castling(end_pos: Vector2, start_pos: Vector2):
 	table.reset_attack(not is_white)
 	table.tile_base_on_position(start_tile_position).reset_attack()
 
-func on_check():
-	$Check.show()
-	moves(current_position, 4)
-	if available_to_move == false and not table.check_protectors:
-		table.game_over = true
-	if not table.check_protectors:
-		table.check_protectors = true
-
 func _on_dropping():
 	var end_tile_position = $Piece.current_tile.chess_position
 	if end_tile_position == Vector2(0,7) or end_tile_position == Vector2(2,7):
@@ -84,6 +75,14 @@ func _on_dropping():
 		table.tile_base_on_position(Vector2(7,7)).piece_standing = null
 		table.tile_base_on_position(Vector2(5,7)).piece_standing.change_for_castling(Vector2(5,7), Vector2(7,7))
 		castling = true
+
+func on_check():
+	$Check.show()
+	moves(current_position, 4)
+	if available_to_move == false and not table.check_protectors:
+		table.game_over = true
+	if not table.check_protectors:
+		table.check_protectors = true
 
 func reset_check():
 	$Check.hide()
@@ -117,7 +116,7 @@ func moves(posi: Vector2, mode: int):
 				elif table.tile_base_on_position(change_vector).check_for_pawn(change_vector,not is_white, true):
 					if not (table.available(change_vector,is_white)):
 						available_to_move = true
-	if not moved:
+	if not moved and table.piece_checking == null:
 		var directions: Array[Vector2] = [Vector2(1,0),Vector2(-1,0)]
 		var p_on_the_way1: bool = false
 		var p_on_the_way2: bool = false

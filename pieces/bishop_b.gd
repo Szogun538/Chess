@@ -78,6 +78,9 @@ func moves(posi: Vector2, mode: int):
 					else:
 						if table.tile_base_on_position(loop_tile).path_when_pro(table.tile_base_on_position(posi).protecting_from[0]):
 							table.change_position_state(loop_tile, table.available(loop_tile, is_white))
+						if table.tile_base_on_position(loop_tile).piece_standing != null:
+							if table.tile_base_on_position(posi).protecting_from[0] == table.tile_base_on_position(loop_tile).piece_standing:
+								table.change_position_state(loop_tile, table.available(loop_tile, is_white))
 				if mode == 1:
 					table.tile_base_on_position(loop_tile).check_occ()
 				if mode == 2:
@@ -114,11 +117,10 @@ func moves(posi: Vector2, mode: int):
 								i.path_to_king_from.append(self)
 						break
 			if mode == 5:
+				if table.tile_base_on_position(loop_tile).piece_standing != null:
+					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
+						table.tile_base_on_position(loop_tile).piece_standing.reset_check()
 				if table.piece_checking == self:
-					if table.tile_base_on_position(loop_tile).piece_standing != null:
-						if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
-							table.tile_base_on_position(loop_tile).piece_standing.reset_check()
-					table.piece_checking = null
 					table.piece_checking = null
 				table.tile_base_on_position(loop_tile).path_to_king_from.erase(self)
 				table.tile_base_on_position(loop_tile).protecting_from.erase(self)

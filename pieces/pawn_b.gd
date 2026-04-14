@@ -19,6 +19,9 @@ func _on_b_dropped():
 	var tile_position = $Piece.start_tile.chess_position
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
+	if current_position.y == 0:
+		self.queue_free()
+		return
 	if table.game_over:
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
@@ -40,9 +43,6 @@ func _on_b_succsesfull_drop():
 	if table.tile_base_on_position(start_tile_position).path_to_king_from.size() > 0:
 		table.tile_base_on_position(start_tile_position).reset_attack()
 	moves(end_tile_position, 4)
-	if end_tile_position.y == 0:
-		self.queue_free()
-		return
 
 func reset_light():
 	moves(current_position, 3)

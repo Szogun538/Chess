@@ -78,6 +78,10 @@ func moves(posi: Vector2, mode: int):
 					else:
 						if table.tile_base_on_position(loop_tile).path_when_pro(table.tile_base_on_position(posi).protecting_from[0]):
 							table.change_position_state(loop_tile, table.available(loop_tile, is_white))
+						if table.tile_base_on_position(loop_tile).piece_standing != null:
+							if table.tile_base_on_position(posi).protecting_from[0] == table.tile_base_on_position(loop_tile).piece_standing:
+								table.change_position_state(loop_tile, table.available(loop_tile, is_white))
+
 				if mode == 1:
 					table.tile_base_on_position(loop_tile).check_occ()
 				if mode == 2:

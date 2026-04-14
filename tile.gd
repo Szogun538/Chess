@@ -14,7 +14,7 @@ var label_text: String = ""
 
 func _process(delta: float) -> void:
 	# $Label.text = label_text
-	# for i in black_lamps:
+	# for i in path_to_king_from:
 	# 	$Label.text += str(i.name) + "\n"
 	pass
 

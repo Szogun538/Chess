@@ -16,11 +16,6 @@ func _ready() -> void:
 	moves(current_position, 2)
 
 func _process(delta: float) -> void:
-	# if is_white == table.turn and table.piece_checking != null and not $Check.visible:
-	# 	print("halo")
-	# 	$Check.show()
-	# elif is_white != table.turn and $Check.visible:
-	# 	$Check.hide()
 	pass
 
 func _on_b_dragged():
