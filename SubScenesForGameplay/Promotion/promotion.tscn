@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://55o6fs4ux1k7"]
+
+[ext_resource type="Script" uid="uid://qgcysetabh43" path="res://SubScenesForGameplay/Promotion/promotion.gd" id="1_jtyvl"]
+
+[node name="Promotion" type="Node2D" unique_id=1025005426]
+script = ExtResource("1_jtyvl")

@@ -3,7 +3,16 @@ extends Node2D
 var is_white = true
 @onready var table = get_parent()
 var current_position: Vector2
-signal check
+var menu: Node2D
+
+var resp_piece = {
+	"queen": preload("res://pieces/queen_w.tscn"),
+	"rook": preload("res://pieces/rook_w.tscn"),
+	"knight": preload("res://pieces/knight_w.tscn"),
+	"bishop": preload("res://pieces/bishop_w.tscn"),
+	}
+
+var promotion_menu = preload("res://SubScenesForGameplay/Promotion/promotion.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,6 +38,14 @@ func _on_b_succsesfull_drop():
 	var end_tile_position = $Piece.current_tile.chess_position
 	var start_tile_position = $Piece.start_tile.chess_position
 	current_position = end_tile_position
+	if current_position.y == 7:
+		if table.tile_base_on_position(start_tile_position).path_to_king_from.size() > 0:
+			table.tile_base_on_position(start_tile_position).reset_attack()
+		table.tile_base_on_position(start_tile_position).reset_lamps()
+		moves(start_tile_position, 3)
+		moves(start_tile_position, 5)
+		promotion()
+		return
 	moves(start_tile_position, 3)
 	moves(start_tile_position, 5)
 	moves(end_tile_position, 2)
@@ -42,8 +59,24 @@ func _on_b_succsesfull_drop():
 	if table.tile_base_on_position(start_tile_position).path_to_king_from.size() > 0:
 		table.tile_base_on_position(start_tile_position).reset_attack()
 	moves(end_tile_position, 4)
-	if end_tile_position.y == 7:
-		self.queue_free()
+
+func promotion():
+	$Piece/Sprite2D.hide()
+	menu = promotion_menu.instantiate()
+	menu.select.connect(_on_selection)
+	menu.is_white = is_white
+	add_child(menu)
+
+func _on_selection():
+	var resp = resp_piece[menu.selected_piece].instantiate()
+	resp.position = position
+	resp.current_position = current_position
+	table.add_child(resp)
+	table.tile_base_on_position(current_position).piece_standing = resp
+	resp.moves(current_position,2)
+	resp.moves(current_position,4)
+	resp.check_game_over()
+	self.queue_free()
 
 func reset_light():
 	moves(current_position, 3)
@@ -94,7 +127,7 @@ func moves(posi: Vector2, mode: int):
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
 					table.piece_checking = self
-					if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
+					if not table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
 						table.check_protectors = false
 					table.tile_base_on_position(change_vector).piece_standing.on_check()
 		if mode == 2:
@@ -114,7 +147,7 @@ func moves(posi: Vector2, mode: int):
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
 					table.piece_checking = self
-					if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
+					if not table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
 						table.check_protectors = false
 					table.tile_base_on_position(change_vector).piece_standing.on_check()
 		if mode == 2:

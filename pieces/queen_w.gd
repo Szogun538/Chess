@@ -19,8 +19,12 @@ func _on_b_dropped():
 	var tile_position = $Piece.start_tile.chess_position
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
+	check_game_over()
+
+func check_game_over():
 	if table.game_over:
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
+
 
 func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
@@ -97,6 +101,7 @@ func moves(posi: Vector2, mode: int):
 					occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
 					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_b":
 						if occupied_scan_tiles.size() == 1:
+							print(table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true))
 							if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
 								for i in scan_tiles:
 									if not i.check_for_pawn(i.chess_position, not is_white, false) or i.chess_position == loop_tile:

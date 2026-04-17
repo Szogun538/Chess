@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ciorxnyheboig"]
+
+[ext_resource type="Script" uid="uid://n57igu4f7ref" path="res://SubScenesForGameplay/Promotion/promotion_tile.gd" id="1_6l4ib"]
+
+[node name="PromotionTile" type="Node2D" unique_id=1177615207]
+script = ExtResource("1_6l4ib")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1815521948]
+scale = Vector2(0.8, 0.8)

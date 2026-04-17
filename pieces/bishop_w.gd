@@ -96,7 +96,7 @@ func moves(posi: Vector2, mode: int):
 					occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
 					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_b":
 						if occupied_scan_tiles.size() == 1:
-							if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
+							if not table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
 								for i in scan_tiles:
 									if not i.check_for_pawn(i.chess_position, not is_white, false) or i.chess_position == loop_tile:
 								

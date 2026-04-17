@@ -3,6 +3,16 @@ extends Node2D
 var is_white = false
 @onready var table = get_parent()
 var current_position: Vector2
+var menu: Node2D
+
+var resp_piece = {
+	"queen": preload("res://pieces/queen_b.tscn"),
+	"rook": preload("res://pieces/rook_b.tscn"),
+	"knight": preload("res://pieces/knight_b.tscn"),
+	"bishop": preload("res://pieces/bishop_b.tscn"),
+	}
+
+var promotion_menu = preload("res://SubScenesForGameplay/Promotion/promotion.tscn")
 
 func _ready() -> void:
 	$Piece.b_dragged.connect(_on_b_dragged)
@@ -19,9 +29,6 @@ func _on_b_dropped():
 	var tile_position = $Piece.start_tile.chess_position
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
-	if current_position.y == 0:
-		self.queue_free()
-		return
 	if table.game_over:
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
@@ -30,6 +37,14 @@ func _on_b_succsesfull_drop():
 	var end_tile_position = $Piece.current_tile.chess_position
 	var start_tile_position = $Piece.start_tile.chess_position
 	current_position = end_tile_position
+	if current_position.y == 0:
+		if table.tile_base_on_position(start_tile_position).path_to_king_from.size() > 0:
+			table.tile_base_on_position(start_tile_position).reset_attack()
+		table.tile_base_on_position(start_tile_position).reset_lamps()
+		moves(start_tile_position, 3)
+		moves(start_tile_position, 5)
+		promotion()
+		return
 	moves(start_tile_position, 3)
 	moves(start_tile_position, 5)
 	moves(end_tile_position, 2)
@@ -44,6 +59,23 @@ func _on_b_succsesfull_drop():
 		table.tile_base_on_position(start_tile_position).reset_attack()
 	moves(end_tile_position, 4)
 
+func promotion():
+	$Piece/Sprite2D.hide()
+	menu = promotion_menu.instantiate()
+	menu.select.connect(_on_selection)
+	menu.is_white = is_white
+	add_child(menu)
+
+func _on_selection():
+	print(menu.selected_piece)
+	var resp = resp_piece[menu.selected_piece].instantiate()
+	resp.position = position
+	resp.current_position = current_position
+	table.add_child(resp)
+	table.tile_base_on_position(current_position).piece_standing = resp
+	resp.moves(current_position,2)
+	resp.moves(current_position,4)
+	self.queue_free()
 func reset_light():
 	moves(current_position, 3)
 	moves(current_position, 2)
@@ -93,7 +125,7 @@ func moves(posi: Vector2, mode: int):
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing.name == "king_w":
 					table.piece_checking = self
-					if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
+					if not table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
 						table.check_protectors = false
 					table.tile_base_on_position(change_vector).piece_standing.on_check()
 		if mode == 2:
@@ -113,7 +145,7 @@ func moves(posi: Vector2, mode: int):
 			if mode == 4:
 				if table.tile_base_on_position(change_vector).piece_standing.name == "king_w":
 					table.piece_checking = self
-					if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
+					if not table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
 						table.check_protectors = false
 					table.tile_base_on_position(change_vector).piece_standing.on_check()
 		if mode == 2:

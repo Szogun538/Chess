@@ -86,7 +86,8 @@ func moves(posi: Vector2, mode: int):
 				if mode == 2:
 					table.tile_base_on_position(loop_tile).add_lamp(self, is_white)
 				if table.tile_base_on_position(loop_tile).piece_standing != null:
-					break
+					if table.tile_base_on_position(loop_tile).piece_standing.name != "king_w":
+						break
 			if mode == 3:
 				table.tile_base_on_position(loop_tile).remove_lamp(self, is_white)
 			if mode == 4:
@@ -95,7 +96,7 @@ func moves(posi: Vector2, mode: int):
 					occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
 					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_w":
 						if occupied_scan_tiles.size() == 1:
-							if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
+							if not table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
 								for i in scan_tiles:
 									if not i.check_for_pawn(i.chess_position, not is_white, false) or i.chess_position == loop_tile:
 								

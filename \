@@ -1,0 +1,26 @@
+extends Node2D
+
+var is_white: bool
+var respawn_position: Vector2
+var tile = preload("res://SubScenesForGameplay/Promotion/promotion_tile.tscn")
+
+func test():
+	is_white = false
+	respawn_position = Vector2(-200,-200)
+
+func _ready() -> void:
+	print("hello")
+	test()
+	var tiles: Array[Node]
+	for i in range(4):
+		tiles.append(tile.instantiate())
+	var cs = 0
+	for new_tile in tiles:
+		print(new_tile)
+		if is_white:
+			new_tile.position.y = position.y + (50 * cs)
+		else:
+			new_tile.position.y = position.y + (-50 * cs)
+			print(new_tile.position)
+		add_child(new_tile)
+		cs += 1
