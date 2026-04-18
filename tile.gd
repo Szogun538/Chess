@@ -14,7 +14,7 @@ var label_text: String = ""
 
 func _process(delta: float) -> void:
 	# $Label.text = label_text
-	# for i in path_to_king_from:
+	# for i in black_lamps:
 	# 	$Label.text += str(i.name) + "\n"
 	pass
 
@@ -84,7 +84,7 @@ func check_for_pawn(current_position: Vector2, color: bool, mode: bool):
 	else:
 		for i in black_lamps:
 			if i.name.left(6) == "pawn_b":
-				if i.current_position == chess_position - Vector2(0,-1) or i.current_position == chess_position - Vector2(0,-2) and i.current_position.y == 6:
+				if i.current_position == chess_position - Vector2(0,-1) or (i.current_position == chess_position - Vector2(0,-2) and i.current_position.y == 6):
 					defence = true
 				else:
 					if mode:

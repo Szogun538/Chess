@@ -17,7 +17,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	pass
-
 func _on_b_dragged():
 	var tile_position = $Piece.start_tile.chess_position
 	get_parent().move_child(self, get_parent().get_child_count() - 1)
@@ -81,6 +80,8 @@ func _on_dropping():
 
 func on_check():
 	$Check.show()
+	print(available_to_move)
+	print(table.check_protectors)
 	moves(current_position, 4)
 	if available_to_move == false and not table.check_protectors:
 		table.game_over = true
@@ -116,11 +117,9 @@ func moves(posi: Vector2, mode: int):
 				if table.tile_base_on_position(change_vector).white_lamps.size() == 0:
 					if not (table.available(change_vector,is_white)):
 						available_to_move = true
-						print(change_vector)
 				elif table.tile_base_on_position(change_vector).check_for_pawn(change_vector,not is_white, true):
 					if not (table.available(change_vector,is_white)):
 						available_to_move = true
-						print(change_vector)
 	if not moved and table.piece_checking == null:
 		var directions: Array[Vector2] = [Vector2(1,0),Vector2(-1,0)]
 		var p_on_the_way1: bool = false
