@@ -119,9 +119,16 @@ func moves(posi: Vector2, mode: int):
 		if table.tile_base_on_position(change_vector).piece_standing != null:
 			if mode == 0:
 				if table.tile_base_on_position(posi).protecting_from.size() == 0:
-					table.change_position_state(change_vector, table.available(change_vector,is_white))
-				elif table.tile_base_on_position(posi).protecting_from[0] == table.tile_base_on_position(change_vector).piece_standing:
-					table.change_position_state(change_vector, table.available(change_vector,is_white))
+					if table.piece_checking != null:
+						if table.tile_base_on_position(change_vector).path_when_pro(table.piece_checking):
+							table.change_position_state(change_vector, table.available(change_vector, is_white))
+						if table.tile_base_on_position(change_vector).piece_standing == table.piece_checking:
+							table.change_position_state(change_vector, table.available(change_vector, is_white))
+					else:
+						table.change_position_state(change_vector, table.available(change_vector, is_white))
+				else:
+					if table.tile_base_on_position(change_vector).piece_standing == table.tile_base_on_position(posi).protecting_from[0]:
+						table.change_position_state(change_vector, table.available(change_vector, is_white))
 			if mode == 1:
 				table.tile_base_on_position(change_vector).check_occ()
 			if mode == 4:
@@ -139,9 +146,16 @@ func moves(posi: Vector2, mode: int):
 		if table.tile_base_on_position(change_vector).piece_standing != null:
 			if mode == 0:
 				if table.tile_base_on_position(posi).protecting_from.size() == 0:
-					table.change_position_state(change_vector, table.available(change_vector,is_white))
-				elif table.tile_base_on_position(posi).protecting_from[0] == table.tile_base_on_position(change_vector).piece_standing:
-					table.change_position_state(change_vector, table.available(change_vector,is_white))
+					if table.piece_checking != null:
+						if table.tile_base_on_position(change_vector).path_when_pro(table.piece_checking):
+							table.change_position_state(change_vector, table.available(change_vector, is_white))
+						if table.tile_base_on_position(change_vector).piece_standing == table.piece_checking:
+							table.change_position_state(change_vector, table.available(change_vector, is_white))
+					else:
+						table.change_position_state(change_vector, table.available(change_vector, is_white))
+				else:
+					if table.tile_base_on_position(change_vector).piece_standing == table.tile_base_on_position(posi).protecting_from[0]:
+						table.change_position_state(change_vector, table.available(change_vector, is_white))
 			if mode == 1:
 				table.tile_base_on_position(change_vector).check_occ()
 			if mode == 4:

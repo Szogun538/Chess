@@ -5,7 +5,7 @@ extends Node2D
 @onready var table = p_parent.get_parent()
 @onready var original_sprite = $Sprite2D
 var dragging = false
-var click_radius = 25
+var click_radius: int
 var copy = null
 var current_tile = null
 var start_tile = null
@@ -15,7 +15,9 @@ signal succsesfull_drop
 signal dropping
 
 func _ready() -> void:
+	click_radius = 25 * table.scale.x
 	$Sprite2D.texture = texture
+	$Sprite2D.rotation += table.rotation
 	$Area2D.area_entered.connect(_on_area_entered)
 	$Area2D.area_exited.connect(_on_area_exited)
 
@@ -38,12 +40,12 @@ func _input(event):
 					emit_signal("dropping")
 					if current_tile.piece_standing == null:
 						current_tile.is_occupied = true
-						p_parent.global_position = current_tile.position
+						p_parent.global_position = current_tile.global_position
 						current_tile.piece_standing = p_parent
 						start_tile.is_occupied = false
 					else:
 						current_tile.is_occupied = true
-						p_parent.global_position = current_tile.position
+						p_parent.global_position = current_tile.global_position
 						current_tile.piece_standing.moves(current_tile.chess_position, 3)
 						current_tile.piece_standing.moves(current_tile.chess_position, 5)
 						current_tile.piece_standing.queue_free()
@@ -53,13 +55,13 @@ func _input(event):
 					emit_signal("succsesfull_drop")
 				else:
 					start_tile.is_occupied = true
-					p_parent.global_position = start_tile.position
+					p_parent.global_position = start_tile.global_position
 			dragging = false
 			remove_child(copy)
 			copy = null
 			emit_signal("dropped")
 	if event is InputEventMouseMotion and dragging:
-		p_parent.global_position = event.position 
-		copy.position = start_tile.position - p_parent.global_position
+		p_parent.global_position = get_global_mouse_position() 
+		copy.position = start_tile.position - p_parent.position
 func _on_area_exited(other_area):
 	pass
