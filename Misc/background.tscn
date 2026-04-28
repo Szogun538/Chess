@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c0t61u7ys7mmd"]
+
+[ext_resource type="Shader" uid="uid://cqgaoigek6xlf" path="res://Misc/background.gdshader" id="1_id8d5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_px5fr"]
+shader = ExtResource("1_id8d5")
+shader_parameter/speed = 0.5
+shader_parameter/frequency = 8.0
+shader_parameter/amplitude = 0.1
+shader_parameter/color_shift = Vector3(0.5, 0.5, 0.5)
+
+[node name="Background" type="Node2D" unique_id=1034149493]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1437957061]
+material = SubResource("ShaderMaterial_px5fr")
+custom_minimum_size = Vector2(800, 800)
+offset_right = 40.0
+offset_bottom = 40.0

@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://dt8ej22p0687s" path="res://pieces/king_b.tscn" id="14_jljh4"]
 
 [node name="Table" type="Node2D" unique_id=983835186]
-scale = Vector2(2, 2)
 script = ExtResource("1_2jgy3")
 
 [node name="Tile" parent="." unique_id=2101923140 node_paths=PackedStringArray("piece_standing") groups=["Tiles"] instance=ExtResource("2_2lsw2")]

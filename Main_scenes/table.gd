@@ -8,7 +8,9 @@ signal change_state
 var turn: bool = true
 var piece_checking: Node2D = null
 var check_protectors: bool = true
-var game_over = false
+var game_over: bool = false
+var first_moved: bool = false
+var change_turn: bool = false
 
 # func _process(delta: float) -> void:
 	# print(check_protectors)

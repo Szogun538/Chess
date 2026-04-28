@@ -25,6 +25,7 @@ func _on_b_dropped():
 
 func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
+	table.change_turn = true
 	var end_tile_position = $Piece.current_tile.chess_position
 	var start_tile_position = $Piece.start_tile.chess_position
 	change_for_castling(end_tile_position, start_tile_position)
