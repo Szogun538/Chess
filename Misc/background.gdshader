@@ -24,7 +24,7 @@ void fragment() {
     
     // 5. Generate shifting psychedelic colors based on the distorted math
     // We use a cosine wave formula to smoothly cycle through RGB values
-    vec3 trippy_color = color_shift + 0.5 * cos(6.28318 * (uv.xyx + vec3(time, time + 0.33, time + 0.67)));
+    vec3 trippy_color = color_shift + 0.5 * sin(6.28318 * (uv.xyx + vec3(time, time + 0.33, time + 0.67)));
     
     // Add a dark pulse from the center
     trippy_color *= smoothstep(0.8, 0.1, dist);

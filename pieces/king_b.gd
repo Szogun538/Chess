@@ -6,6 +6,9 @@ var current_position: Vector2
 var available_to_move: bool = false
 var moved: bool = false
 var castling: bool = false
+var type: Move.MoveType
+var special: Move.SpecialType = Move.SpecialType.NULL
+var promotion_piece: String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -33,12 +36,14 @@ func _on_b_dropped():
 			table.tile_base_on_position(Vector2(0,7)).piece_standing = null
 			change_for_castling(Vector2(2,7),current_position)
 			castling = false
+			TurnManager.history[TurnManager.history.size() -1].type = Move.MoveType.CASTLING_L
 		if current_position == Vector2(7,7):
 			table.tile_base_on_position(Vector2(7,7)).piece_standing.position = table.tile_base_on_position(Vector2(6,7)).position
 			table.tile_base_on_position(Vector2(6,7)).piece_standing = table.tile_base_on_position(Vector2(7,7)).piece_standing
 			table.tile_base_on_position(Vector2(7,7)).piece_standing = null
 			change_for_castling(Vector2(6,7),current_position)
 			castling = false
+			TurnManager.history[TurnManager.history.size() -1].type = Move.MoveType.CASTLING_S
 
 func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
@@ -46,6 +51,17 @@ func _on_b_succsesfull_drop():
 	var start_tile_position = $Piece.start_tile.chess_position
 	var end_tile_position = $Piece.current_tile.chess_position
 	change_for_castling(end_tile_position,start_tile_position)
+	add_history(start_tile_position, end_tile_position)
+
+func add_history(start, end):
+	# if table.tile_base_on_position(current_position).white_lamps.size() != 0:
+	# 	if not table.tile_base_on_position(current_position).find_pawn(is_white):
+	# 		type = Move.MoveType.MOVE_MULTI
+	var move = Move.new(start, end, type, Move.PieceType.K)
+	if table.piece_checking != null:
+		move.special = Move.SpecialType.CHECK
+	move.promotion = promotion_piece
+	TurnManager.add(move)
 
 func change_for_castling(end_pos: Vector2, start_pos: Vector2):
 	var end_tile_position = end_pos
@@ -81,8 +97,6 @@ func _on_dropping():
 
 func on_check():
 	$Check.show()
-	print(available_to_move)
-	print(table.check_protectors)
 	moves(current_position, 4)
 	if available_to_move == false and not table.check_protectors:
 		table.game_over = true

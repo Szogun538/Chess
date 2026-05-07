@@ -97,6 +97,17 @@ func check_for_pawn(current_position: Vector2, color: bool, mode: bool):
 						return true
 	return defence
 
+func find_brother(brother: Node2D, color: bool = false):
+	if color:
+		for piece in white_lamps:
+			if piece.name.left(6) == brother.name.left(6) and piece != brother:
+				return true
+	else:
+		for piece in black_lamps:
+			if piece.name.left(6) == brother.name.left(6) and piece != brother:
+				return true
+
+
 func reset_lamps():
 	if white_lamps.size() > 0:
 		for i in white_lamps:

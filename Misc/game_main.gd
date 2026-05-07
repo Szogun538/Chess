@@ -4,11 +4,8 @@ var white_time: float = 5 * 60
 var black_time: float = 5 * 60
 var pluser: float = 3
 var moved: bool = false
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
+var history: Array[Move]
+var turn_count: int = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -18,6 +15,7 @@ func _process(delta: float) -> void:
 			if turn:
 				if $Table.change_turn : 
 					$Table.change_turn = false
+					turn_count += 1
 					black_time += 3
 				white_time += -1 * 1 * delta
 			else:
@@ -44,3 +42,19 @@ func seconds_to_time(time: float):
 			return str(int(minutes)) + ":0" + str(int(seconds))
 		else:
 			return str(int(minutes)) + ":" + str(int(seconds))
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	# TurnManager.add(Move.new(Vector2(0,0), Vector2(7,5), Move.MoveType.KILL))
+	pass # Replace with function body.
+
+
+func _on_button_pressed():
+	print("--------------------- " + str(turn_count) + ". ----------------------")
+	for move in TurnManager.history:
+		print(Move.PieceType.find_key(move.piece))
+		print(move.start)
+		print(move.end)
+		print(Move.MoveType.find_key(move.type))
+		print(Move.SpecialType.find_key(move.special))
+		print(move.promotion)

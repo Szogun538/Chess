@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cd6i4yrmmm6h0"]
+
+[ext_resource type="Script" uid="uid://bbw6u1511wyqe" path="res://Misc/floating_piece.gd" id="1_42wx0"]
+
+[node name="FloatingPiece" type="Node2D" unique_id=1600794638]
+script = ExtResource("1_42wx0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1393014098]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=182713531]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=445457762]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -4,6 +4,9 @@ var is_white = false
 @onready var table = get_parent()
 var current_position: Vector2
 var menu: Node2D
+var type: Move.MoveType
+var special: Move.SpecialType = Move.SpecialType.NULL
+var promotion_piece: String = ""
 
 var resp_piece = {
 	"queen": preload("res://pieces/queen_b.tscn"),
@@ -59,6 +62,15 @@ func _on_b_succsesfull_drop():
 	if table.tile_base_on_position(start_tile_position).path_to_king_from.size() > 0:
 		table.tile_base_on_position(start_tile_position).reset_attack()
 	moves(end_tile_position, 4)
+	add_history(start_tile_position, end_tile_position)
+
+func add_history(start, end):
+	var move = Move.new(start, end, type, Move.PieceType.P)
+	if table.piece_checking != null:
+		move.special = special
+	move.promotion = promotion_piece
+	move.piece = Move.PieceType.P
+	TurnManager.add(move)
 
 func promotion():
 	$Piece/Sprite2D.hide()
@@ -68,7 +80,6 @@ func promotion():
 	add_child(menu)
 
 func _on_selection():
-	print(menu.selected_piece)
 	var resp = resp_piece[menu.selected_piece].instantiate()
 	resp.position = position
 	resp.current_position = current_position
@@ -76,7 +87,11 @@ func _on_selection():
 	table.tile_base_on_position(current_position).piece_standing = resp
 	resp.moves(current_position,2)
 	resp.moves(current_position,4)
+	resp.check_game_over()
+	promotion_piece = menu.selected_piece
+	add_history($Piece.start_tile.chess_position, current_position)
 	self.queue_free()
+
 func reset_light():
 	moves(current_position, 3)
 	moves(current_position, 2)

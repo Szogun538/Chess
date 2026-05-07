@@ -3,6 +3,9 @@ extends Node2D
 var is_white = false
 @onready var table = get_parent()
 var current_position: Vector2
+var type: Move.MoveType
+var special: Move.SpecialType = Move.SpecialType.NULL
+var promotion_piece: String = ""
 
 func _ready() -> void:
 	$Piece.b_dragged.connect(_on_b_dragged)
@@ -19,6 +22,9 @@ func _on_b_dropped():
 	var tile_position = $Piece.start_tile.chess_position
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
+	check_game_over()
+
+func check_game_over():
 	if table.game_over:
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
@@ -41,6 +47,17 @@ func _on_b_succsesfull_drop():
 	moves(end_tile_position, 4)
 	table.tile_base_on_position(current_position).reset_lamps()
 	table.tile_base_on_position(start_tile_position).reset_lamps()
+	add_history(start_tile_position, end_tile_position)
+
+func add_history(start, end):
+	# if table.tile_base_on_position(current_position).black_lamps.size() != 0:
+	# 	if not table.tile_base_on_position(current_position).find_pawn(is_white):
+	# 		type = Move.MoveType.MOVE_MULTI
+	var move = Move.new(start, end, type, Move.PieceType.Q)
+	if table.piece_checking != null:
+		move.special = Move.SpecialType.CHECK
+	move.promotion = promotion_piece
+	TurnManager.add(move)
 
 func reset_light():
 	moves(current_position, 3)

@@ -59,3 +59,12 @@ vertical_alignment = 1
 position = Vector2(-20, 20)
 scale = Vector2(0.67, 0.67)
 texture = ExtResource("4_kvekq")
+
+[node name="Button" type="Button" parent="." unique_id=149515715]
+offset_left = 30.0
+offset_top = 52.0
+offset_right = 80.0
+offset_bottom = 83.0
+text = "Show"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

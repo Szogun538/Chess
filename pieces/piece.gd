@@ -43,6 +43,7 @@ func _input(event):
 						p_parent.global_position = current_tile.global_position
 						current_tile.piece_standing = p_parent
 						start_tile.is_occupied = false
+						p_parent.type = Move.MoveType.MOVE_ALONE
 					else:
 						current_tile.is_occupied = true
 						p_parent.global_position = current_tile.global_position
@@ -50,6 +51,7 @@ func _input(event):
 						current_tile.piece_standing.moves(current_tile.chess_position, 5)
 						current_tile.piece_standing.queue_free()
 						current_tile.piece_standing = p_parent
+						p_parent.type = Move.MoveType.KILL
 					start_tile.is_occupied = false
 					start_tile.piece_standing = null
 					emit_signal("succsesfull_drop")
