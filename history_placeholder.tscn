@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://boc2glg6nqe1i"]
+
+[ext_resource type="Script" uid="uid://0ukgjh82vet0" path="res://history_placeholder.gd" id="1_v2mji"]
+
+[node name="History_placeholder" type="Node2D" unique_id=255913909]
+script = ExtResource("1_v2mji")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1493230692]
+offset_right = 640.0
+offset_bottom = 42.0
+focus_mode = 2
+selection_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1134750605]
+offset_right = 640.0
+offset_bottom = 42.0
+color = Color(0, 0, 0, 0.1882353)

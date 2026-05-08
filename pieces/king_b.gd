@@ -9,6 +9,7 @@ var castling: bool = false
 var type: Move.MoveType
 var special: Move.SpecialType = Move.SpecialType.NULL
 var promotion_piece: String = ""
+var type_castling: Move.MoveType
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -36,14 +37,13 @@ func _on_b_dropped():
 			table.tile_base_on_position(Vector2(0,7)).piece_standing = null
 			change_for_castling(Vector2(2,7),current_position)
 			castling = false
-			TurnManager.history[TurnManager.history.size() -1].type = Move.MoveType.CASTLING_L
 		if current_position == Vector2(7,7):
 			table.tile_base_on_position(Vector2(7,7)).piece_standing.position = table.tile_base_on_position(Vector2(6,7)).position
 			table.tile_base_on_position(Vector2(6,7)).piece_standing = table.tile_base_on_position(Vector2(7,7)).piece_standing
 			table.tile_base_on_position(Vector2(7,7)).piece_standing = null
 			change_for_castling(Vector2(6,7),current_position)
 			castling = false
-			TurnManager.history[TurnManager.history.size() -1].type = Move.MoveType.CASTLING_S
+	castling = false
 
 func _on_b_succsesfull_drop():
 	table.turn =  not table.turn
@@ -61,6 +61,8 @@ func add_history(start, end):
 	if table.piece_checking != null:
 		move.special = Move.SpecialType.CHECK
 	move.promotion = promotion_piece
+	if castling:
+		move.type = type_castling
 	TurnManager.add(move)
 
 func change_for_castling(end_pos: Vector2, start_pos: Vector2):
@@ -87,13 +89,17 @@ func _on_dropping():
 			table.tile_base_on_position(Vector2(3,7)).piece_standing = table.tile_base_on_position(Vector2(0,7)).piece_standing
 			table.tile_base_on_position(Vector2(0,7)).piece_standing = null
 			table.tile_base_on_position(Vector2(3,7)).piece_standing.change_for_castling(Vector2(3,7), Vector2(0,7))
+			TurnManager.history[TurnManager.history.size() -1].type = Move.MoveType.CASTLING_L
 			castling = true
+			type_castling = Move.MoveType.CASTLING_L
 		if end_tile_position == Vector2(7,7) or end_tile_position == Vector2(6,7):
 			table.tile_base_on_position(Vector2(7,7)).piece_standing.position = table.tile_base_on_position(Vector2(5,7)).position
 			table.tile_base_on_position(Vector2(5,7)).piece_standing = table.tile_base_on_position(Vector2(7,7)).piece_standing
 			table.tile_base_on_position(Vector2(7,7)).piece_standing = null
 			table.tile_base_on_position(Vector2(5,7)).piece_standing.change_for_castling(Vector2(5,7), Vector2(7,7))
+			TurnManager.history[TurnManager.history.size() -1].type = Move.MoveType.CASTLING_S
 			castling = true
+			type_castling = Move.MoveType.CASTLING_S
 
 func on_check():
 	$Check.show()

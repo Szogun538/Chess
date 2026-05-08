@@ -33,6 +33,7 @@ func _on_b_dropped():
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
 	if table.game_over:
+		TurnManager.history[TurnManager.history.size() -1].special = Move.SpecialType.CHECKMATE
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
 func _on_b_succsesfull_drop():

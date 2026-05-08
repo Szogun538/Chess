@@ -28,6 +28,7 @@ var end: Vector2
 var type: MoveType
 var special: SpecialType
 var piece: PieceType
+var kill_for_multi: bool = false
 func _init(s: Vector2, e: Vector2, t: MoveType, p = piece):
 	piece = p
 	start = s

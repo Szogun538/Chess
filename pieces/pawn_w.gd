@@ -34,11 +34,10 @@ func _on_b_dropped():
 	table.tile_base_on_position(tile_position).check_occ()
 	moves(tile_position, 1)
 	if table.game_over:
+		TurnManager.history[TurnManager.history.size() -1].special = Move.SpecialType.CHECKMATE
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
 func _on_b_succsesfull_drop():
-	table.turn =  not table.turn
-	table.change_turn = true
 	table.first_moved = true
 	var end_tile_position = $Piece.current_tile.chess_position
 	var start_tile_position = $Piece.start_tile.chess_position
@@ -51,6 +50,8 @@ func _on_b_succsesfull_drop():
 		moves(start_tile_position, 5)
 		promotion()
 		return
+	table.turn =  not table.turn
+	table.change_turn = true
 	moves(start_tile_position, 3)
 	moves(start_tile_position, 5)
 	moves(end_tile_position, 2)
@@ -91,6 +92,8 @@ func _on_selection():
 	resp.check_game_over()
 	promotion_piece = menu.selected_piece
 	add_history($Piece.start_tile.chess_position, current_position)
+	table.turn =  not table.turn
+	table.change_turn = true
 	self.queue_free()
 
 func reset_light():

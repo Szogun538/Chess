@@ -26,6 +26,7 @@ func _on_b_dropped():
 
 func check_game_over():
 	if table.game_over:
+		TurnManager.history[TurnManager.history.size() -1].special = Move.SpecialType.CHECKMATE
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
 func _on_b_succsesfull_drop():

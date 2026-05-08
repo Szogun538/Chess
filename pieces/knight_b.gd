@@ -6,6 +6,7 @@ var current_position: Vector2
 var type: Move.MoveType
 var special: Move.SpecialType = Move.SpecialType.NULL
 var promotion_piece: String = ""
+var kill: bool = false
 
 func _ready() -> void:
 	$Piece.b_dragged.connect(_on_b_dragged)
@@ -26,6 +27,7 @@ func _on_b_dropped():
 
 func check_game_over():
 	if table.game_over:
+		TurnManager.history[TurnManager.history.size() -1].special = Move.SpecialType.CHECKMATE
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
 func _on_b_succsesfull_drop():
@@ -50,10 +52,13 @@ func _on_b_succsesfull_drop():
 	add_history(start_tile_position, end_tile_position)
 
 func add_history(start, end):
-	if table.tile_base_on_position(current_position).black_lamps.size() != 0:
+	if table.tile_base_on_position(current_position).white_lamps.size() != 0:
 		if table.tile_base_on_position(current_position).find_brother(self,is_white):
+			if type == Move.MoveType.KILL:
+				kill = true
 			type = Move.MoveType.MOVE_MULTI
 	var move = Move.new(start, end, type, Move.PieceType.N)
+	move.kill_for_multi = kill
 	if table.piece_checking != null:
 		move.special = Move.SpecialType.CHECK
 	move.promotion = promotion_piece

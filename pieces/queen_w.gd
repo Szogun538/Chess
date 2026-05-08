@@ -26,6 +26,7 @@ func _on_b_dropped():
 
 func check_game_over():
 	if table.game_over:
+		TurnManager.history[TurnManager.history.size() -1].special = Move.SpecialType.CHECKMATE
 		get_tree().change_scene_to_file("res://Main_scenes/main_menu.tscn")
 
 
@@ -54,7 +55,7 @@ func add_history(start, end):
 	# if table.tile_base_on_position(current_position).white_lamps.size() != 0:
 	# 	if not table.tile_base_on_position(current_position).find_pawn(is_white):
 	# 		type = Move.MoveType.MOVE_MULTI
-	var move = Move.new(start, end, type, Move.PieceType.K)
+	var move = Move.new(start, end, type, Move.PieceType.Q)
 	if table.piece_checking != null:
 		move.special = Move.SpecialType.CHECK
 	move.promotion = promotion_piece
