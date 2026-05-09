@@ -108,7 +108,7 @@ func moves(posi: Vector2, mode: int):
 				if table.tile_base_on_position(change_vector).piece_standing != null:
 					if table.tile_base_on_position(change_vector).piece_standing.name == "king_b":
 						table.piece_checking = self
-						if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
+						if not table.tile_base_on_position(current_position).check_if_protected(is_white, self):
 							table.check_protectors = false
 						table.tile_base_on_position(change_vector).piece_standing.on_check()
 			if mode == 5:

@@ -19,13 +19,6 @@ func _ready() -> void:
 	$Piece.dropping.connect(_on_dropping)
 	moves(current_position, 2)
 
-func _process(delta: float) -> void:
-	# if is_white == table.turn and table.piece_checking != null and not $Check.visible:
-	# 	print("halo")
-	# 	$Check.show()
-	# elif is_white != table.turn and $Check.visible:
-	# 	$Check.hide()
-	pass
 
 func _on_b_dragged():
 	var tile_position = $Piece.start_tile.chess_position
@@ -128,7 +121,7 @@ func moves(posi: Vector2, mode: int):
 			if mode == 0:
 				if table.tile_base_on_position(change_vector).black_lamps.size() == 0:
 					table.change_position_state(change_vector, table.available(change_vector, is_white))
-				elif table.tile_base_on_position(change_vector).check_for_pawn(change_vector,not is_white, true):
+				elif not table.tile_base_on_position(change_vector).check_if_protected(is_white, self):
 					table.change_position_state(change_vector, table.available(change_vector,is_white))
 			if mode == 1:
 				table.tile_base_on_position(change_vector).check_occ()
@@ -140,7 +133,7 @@ func moves(posi: Vector2, mode: int):
 				if table.tile_base_on_position(change_vector).black_lamps.size() == 0:
 					if not (table.available(change_vector,is_white)):
 						available_to_move = true
-				elif table.tile_base_on_position(change_vector).check_for_pawn(change_vector,not is_white, true):
+				elif not table.tile_base_on_position(change_vector).check_if_protected(is_white, self):
 					if not (table.available(change_vector,is_white)):
 						available_to_move = true
 	if not moved:

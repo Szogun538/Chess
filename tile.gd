@@ -8,15 +8,11 @@ var white_lamps: Array[Node2D] = []
 var black_lamps: Array[Node2D] = []
 var protecting_from: Array[Node2D] = []
 var path_to_king_from: Array[Node2D] = []
+@onready var table: Node2D = get_parent()
 
 #temp
 var label_text: String = ""
 
-func _process(delta: float) -> void:
-	# $Label.text = label_text
-	# for i in black_lamps:
-	# 	$Label.text += str(i.name) + "\n"
-	pass
 
 func _ready():
 	get_parent().change_state.connect(_on_change_state)
@@ -65,38 +61,61 @@ func remove_lamp(piece: Node2D, color: bool):
 		if exist:
 			black_lamps.erase(piece)
 
-func check_for_pawn(current_position: Vector2, color: bool, mode: bool):
-	var defence: bool = false
+func chech_path_for_protect(color:bool):
+	var is_protected: bool = false
 	if color:
-		for i in white_lamps:
-			if i.name.left(6) == "pawn_w":
-				if i.current_position == chess_position - Vector2(0,1) or i.current_position == chess_position - Vector2(0,2) and i.current_position.y == 1:
-					defence = true
-				else:
-					if mode:
-						return false 
-			else:
-				if mode:
-					return false
-				else:
-					if i.name != "king_w":
-						return true
+		for piece in black_lamps:
+			if piece.name.left(6) == "pawn_b":
+				if not piece.current_position - chess_position == Vector2(-1,1) and not piece.current_position - chess_position == Vector2(1,1):
+					is_protected = true
+			elif piece.name.left(6) != "king_b":
+				is_protected = true
 	else:
-		for i in black_lamps:
-			if i.name.left(6) == "pawn_b":
-				if i.current_position == chess_position - Vector2(0,-1) or (i.current_position == chess_position - Vector2(0,-2) and i.current_position.y == 6):
-					defence = true
-				else:
-					if mode:
-						return false 
+		for piece in white_lamps:
+			if piece.name.left(6) == "pawn_w":
+				if not piece.current_position - chess_position == Vector2(-1,1) and not piece.current_position - chess_position == Vector2(1,1):
+					is_protected = true
+			elif piece.name.left(6) != "king_w":
+				is_protected = true
+	return is_protected
+			
+func check_if_protected(color: bool, piece_checking: Node2D):
+	var is_protected = false
+	if color:
+		for piece in black_lamps:
+			var check_tile = table.tile_base_on_position(piece.current_position)
+			if piece.name.left(6) == "pawn_b":
+				if piece.current_position - chess_position == Vector2(-1,1) or piece.current_position - chess_position == Vector2(1,1):
+					if check_tile.protecting_from.size() > 0:
+						if check_tile.protecting_from[0] == piece_checking:
+							is_protected = true
+					else:
+						is_protected = true
 			else:
-				if mode:
-					return false
+				if check_tile.protecting_from.size() > 0:
+					if check_tile.protecting_from[0] == piece_checking:
+						is_protected = true
 				else:
-					if i.name != "king_b":
-						return true
-	return defence
-
+					is_protected = true
+				
+	else:
+		for piece in white_lamps:
+			var check_tile = table.tile_base_on_position(piece.current_position)
+			if piece.name.left(6) == "pawn_w":
+				if piece.current_position - chess_position == Vector2(-1,-1) or piece.current_position - chess_position == Vector2(1,-1):
+					if check_tile.protecting_from.size() > 0:
+						if check_tile.protecting_from[0] == piece_checking:
+							is_protected = true
+					else:
+						is_protected = true
+			else:
+				if check_tile.protecting_from.size() > 0:
+					if check_tile.protecting_from[0] == piece_checking:
+						is_protected = true
+				else:
+					is_protected = true
+	return is_protected
+		
 func find_brother(brother: Node2D, color: bool = false):
 	if color:
 		for piece in white_lamps:
@@ -106,7 +125,6 @@ func find_brother(brother: Node2D, color: bool = false):
 		for piece in black_lamps:
 			if piece.name.left(6) == brother.name.left(6) and piece != brother:
 				return true
-
 
 func reset_lamps():
 	if white_lamps.size() > 0:

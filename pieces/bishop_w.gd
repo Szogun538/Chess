@@ -115,20 +115,31 @@ func moves(posi: Vector2, mode: int):
 					occupied_scan_tiles.append(table.tile_base_on_position(loop_tile))
 					if table.tile_base_on_position(loop_tile).piece_standing.name == "king_b":
 						if occupied_scan_tiles.size() == 1:
-							if table.tile_base_on_position(current_position).check_for_pawn(current_position, not is_white, true):
-								for i in scan_tiles:
-									if not i.check_for_pawn(i.chess_position, not is_white, false) or i.chess_position == loop_tile:
-										table.check_protectors = false
-									else:
+							for i in scan_tiles:
+								if i != scan_tiles[scan_tiles.size() -1]:
+									if table.tile_base_on_position(i.chess_position).chech_path_for_protect(is_white) or table.tile_base_on_position(posi).check_if_protected(is_white, self):
 										table.check_protectors = true
 										break
-							if table.tile_base_on_position(current_position).white_lamps.size() != 0:
-								for i in scan_tiles:
-									if not i.check_for_pawn(i.chess_position, not is_white, false) or i.chess_position == loop_tile:
-										table.check_protectors = false
 									else:
+										table.check_protectors = false
+								elif scan_tiles.size() == 1:
+									if table.tile_base_on_position(posi).white_lamps.size() == 0:
 										table.check_protectors = true
 										break
+									else: 
+										for piece in table.tile_base_on_position(posi).black_lamps:
+											if piece.name.left(6) != "king_b":
+												if piece.name.left(6) == "pawn_b":
+													if piece.current_position - posi == Vector2(-1,1) or piece.current_position - posi == Vector2(-1,1):
+														table.check_protectors = true
+														break
+													else:
+														table.check_protectors = false
+												else:
+													table.check_protectors = true
+													break
+											else:
+												table.check_protectors = false
 							table.piece_checking = self
 							table.tile_base_on_position(loop_tile).piece_standing.on_check()
 						for i in scan_tiles:

@@ -50,6 +50,9 @@ func encoding(move: Move):
 			output += sposx + type[Move.MoveType.KILL] + eposx + eposy
 		elif move.type == Move.MoveType.MOVE_ALONE:
 			output += eposx + eposy
+		elif move.type == Move.MoveType.EP:
+			output += sposx + type[Move.MoveType.KILL] + eposx + eposy
+
 	else:
 		# if move.type == Move.MoveType.MOVE_ALONE:
 		# 	output += piece + eposx + eposy
